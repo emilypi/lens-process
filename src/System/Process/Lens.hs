@@ -3,3 +3,5 @@ module System.Process.Lens
 ) where
 
 import System.Process.Lens.CommandSpec as L
+import System.Process.Lens.CreateProcess as L
+import System.Process.Lens.StdStream as L
