@@ -8,7 +8,7 @@
 --
 -- Just the (classy) optics
 --
-module System.Process.Lens.Optics
+module System.Process.Optics
 ( -- * Optics
   _ShellCommand
 , _RawCommand
