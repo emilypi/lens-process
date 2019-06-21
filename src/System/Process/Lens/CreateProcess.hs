@@ -6,7 +6,7 @@
 --
 -- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>
 -- Stability	: Experimental
--- Portability	: Portable
+-- Portability	: TypeFamilies, Rank2Types
 --
 -- 'CreateProcess' lenses and combinators
 --
@@ -37,13 +37,10 @@ module System.Process.Lens.CreateProcess
 
 import Control.Lens
 
-import Data.Functor (void)
-
 import qualified System.IO as H
 import System.Posix.Types
 import System.Process
 import System.Process.Lens.StdStream
-import System.Process.Lens.CommandSpec
 
 
 -- ---------------------------------------------------------- --
@@ -146,7 +143,7 @@ clearing c = c
   & set stdin Inherit
   & set stdout Inherit
 
--- | Close something with a prism into a non-standard 'Handle' in a 'CreateProcess'
+-- | Close something with a prism into a non-standard 'H.Handle' in a 'CreateProcess'
 --
 closing :: HasUseHandle a => Getter CreateProcess a -> CreateProcess -> IO ()
 closing l c = case c ^? l . _UsesHandle of

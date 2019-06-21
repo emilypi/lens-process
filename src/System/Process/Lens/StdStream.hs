@@ -58,29 +58,29 @@ _NoStream = prism' (const NoStream) $ \case
   NoStream -> Just NoStream
   _ -> Nothing
 
--- | Class constraint proving an 'a' has a prism into an 'Inherit'
+-- | Class constraint proving a type has a prism into an 'Inherit'
 -- structure. In general, this seems redundant, however, this class
--- is a proof on 'a' that 'a' is an 'Inherit', which is a wonderful
+-- is a proof on `a` that `a` is an 'Inherit', which is a wonderful
 -- thing to prove.
 class (a ~ StdStream) => HasInherit a where
   _Inherits :: Prism' a StdStream
   _Inherits = _Inherit
 
--- | Class constraint proving an 'a' has a prism into a 'Handle' via
+-- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
 class (a ~ StdStream) => HasUseHandle a where
   _UsesHandle :: Prism' a Handle
   _UsesHandle = _UseHandle
 
--- | Class constraint proving an 'a' has a prism into a 'Handle' via
+-- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
 class (a ~ StdStream) => HasCreatePipe a where
   _CreatesPipe :: Prism' a StdStream
   _CreatesPipe = _CreatePipe
 
--- | Class constraint proving an 'a' has a prism into a 'Handle' via
+-- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
 class (a ~ StdStream) => HasNoStream a where

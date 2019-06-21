@@ -4,11 +4,11 @@
 --
 -- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>
 -- Stability	: Experimental
--- Portability	: Portable
+-- Portability	: TypeFamilies, Rank2Types
 --
 -- Just the (classy) optics
 --
-module System.Process.Lens
+module System.Process.Lens.Optics
 ( -- * Optics
   _ShellCommand
 , _RawCommand
@@ -37,12 +37,6 @@ module System.Process.Lens
 , HasUseHandle(..)
 , HasCreatePipe(..)
 , HasNoStream(..)
-  -- * Combinators
-, stdoutOf
-, stdinOf
-, stderrOf
-, clearing
-, closing
 ) where
 
 import System.Process.Lens.CommandSpec
