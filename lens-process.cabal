@@ -34,8 +34,14 @@ source-repository head
 
 library
   exposed-modules:     System.Process.Lens
-  -- other-modules:
-  -- other-extensions:
+  other-modules:       System.Process.Lens.CommandSpec
+                     , System.Process.Lens.CreateProcess
+                     , System.Process.Lens.StdStream
+
+  other-extensions:    MultiParamTypeClasses
+                     , RankNTypes
+                     , Safe
+
 
   build-depends:       base       >= 4.4    && < 5
                      , directory  >= 1.1    && < 1.4
