@@ -1,0 +1,31 @@
+language: haskell
+ghc:
+  - 8.4.3
+  - 8.4.4
+  - 8.6.3
+  - 8.6.5
+
+cabal: 2.4
+
+install:
+  - export PATH=$HOME/.cabal/bin:$PATH &&
+    cabal new-update
+
+script:
+  - cabal v2-build -O0 all
+  - cabal v2-test -O0
+before_cache:
+  - rm -rf $HOME/.cabal/logs
+
+cache:
+  apt: true
+  directories:
+  - "$HOME/.ghcup"
+  - "$HOME/.cabal"
+
+branches:
+  only:
+    - master
+
+notifications:
+  email: false
