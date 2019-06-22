@@ -1,3 +1,4 @@
+{-# LANGUAGE Rank2Types #-}
 -- |
 -- Copyright 	: 2019 Emily Pillmore
 -- License	: BSD
@@ -61,6 +62,8 @@ module System.Process.Lens
 
 import Control.Lens
 
+import qualified System.IO as IO
+
 import System.Process (CreateProcess(..), CmdSpec(..))
 import qualified System.Process as System
 import System.Process.Lens.CommandSpec
@@ -74,3 +77,16 @@ proc cmd args = defaultCreateProcess & cmdspec_ .~ RawCommand cmd args
 
 shell :: String -> CreateProcess
 shell cmd = defaultCreateProcess & cmdspec_ .~ ShellCommand cmd
+
+myStdInProcess
+  :: forall b c
+  . IsUseHandle b
+  => CreateProcess
+  -> (b -> IO (Either String c))
+  -> IO (Either String c)
+myStdInProcess cp g = do
+  handler <- view (from _Handler) <$> System.createProcess cp
+
+  case handler ^? hstdout ._Just . re _UsesHandle of
+    Nothing -> error "oh no!"
+    Just t -> g t
