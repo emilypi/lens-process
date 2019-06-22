@@ -50,6 +50,7 @@ library
                      , lens       >= 4.0     && < 4.18
                      , mtl        >= 2.2     && < 2.3
                      , process    >= 1.4     && < 1.7
+                     , stm        >= 2.5     && < 2.6
 
   hs-source-dirs:      src
   ghc-options:         -Wall
@@ -67,6 +68,7 @@ test-suite lens-process-tests
                      , lens       >= 4.17    && < 4.18
                      , lens-process
                      , process    >= 1.6     && < 1.7
+                     , stm        >= 2.5     && < 2.6
                      , tasty
                      , tasty-hunit
 

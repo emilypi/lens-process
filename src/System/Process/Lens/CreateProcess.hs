@@ -162,7 +162,7 @@ class HasStderr a where
 
 instance HasStderr StdStream where
   _Stderr = id
-  
+
 instance HasStderr CreateProcess where
   _Stderr = stderr
 
