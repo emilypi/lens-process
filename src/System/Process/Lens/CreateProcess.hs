@@ -131,17 +131,17 @@ useprocessjobs = lens use_process_jobs (\t b -> t { use_process_jobs = b })
 
 -- | Retrieve the stdout handle associated with a 'CreateProcess'
 --
-stdinOf :: HasUseHandle a => CreateProcess -> Maybe H.Handle
+stdinOf :: CreateProcess -> Maybe H.Handle
 stdinOf = preview $ stdin . _UsesHandle
 
 -- | Retrieve the stdin handle associated with a 'CreateProcess'
 --
-stdoutOf :: HasUseHandle a => CreateProcess -> Maybe H.Handle
+stdoutOf :: CreateProcess -> Maybe H.Handle
 stdoutOf = preview $ stdout . _UsesHandle
 
 -- | Retrieve the stderr handle associated with a 'CreateProcess'
 --
-stderrOf :: HasUseHandle a => CreateProcess -> Maybe H.Handle
+stderrOf :: CreateProcess -> Maybe H.Handle
 stderrOf = preview $ stderr . _UsesHandle
 
 -- | Close something with a prism into a non-standard 'H.Handle' in a 'CreateProcess'

@@ -63,9 +63,8 @@ _NoStream = prism' (const NoStream) $ \case
 -- structure. In general, this seems redundant, however, this class
 -- is a proof on `a` that `a` is an 'Inherit', which is a wonderful
 -- thing to prove.
-class (a ~ StdStream) => HasInherit a where
+class HasInherit a where
   _Inherits :: Prism' a StdStream
-  _Inherits = _Inherit
   {-# MINIMAL _Inherits #-}
 
 instance HasInherit StdStream where
@@ -74,9 +73,8 @@ instance HasInherit StdStream where
 -- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
-class (a ~ StdStream) => HasUseHandle a where
+class HasUseHandle a where
   _UsesHandle :: Prism' a Handle
-  _UsesHandle = _UseHandle
   {-# MINIMAL _UsesHandle #-}
 
 instance HasUseHandle StdStream where
@@ -85,9 +83,8 @@ instance HasUseHandle StdStream where
 -- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
-class (a ~ StdStream) => HasCreatePipe a where
+class HasCreatePipe a where
   _CreatesPipe :: Prism' a StdStream
-  _CreatesPipe = _CreatePipe
   {-# MINIMAL _CreatesPipe #-}
 
 instance HasCreatePipe StdStream where
@@ -96,9 +93,8 @@ instance HasCreatePipe StdStream where
 -- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
-class (a ~ StdStream) => HasNoStream a where
+class HasNoStream a where
   _NoStreams :: Prism' a StdStream
-  _NoStreams = _NoStream
   {-# MINIMAL _NoStreams #-}
 
 instance HasNoStream StdStream where

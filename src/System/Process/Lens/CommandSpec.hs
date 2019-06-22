@@ -49,9 +49,8 @@ arguments = _RawCommand . traverse
 
 -- | Classy prism into the shell command of a 'CmdSpec'
 --
-class (a ~ CmdSpec) => HasShell a where
+class HasShell a where
   _Shell :: Prism' a String
-  _Shell = _ShellCommand
   {-# MINIMAL _Shell #-}
 
 instance HasShell CmdSpec where
@@ -59,9 +58,8 @@ instance HasShell CmdSpec where
 
 -- | Classy prism into the shell command of a 'CmdSpec'
 --
-class (a ~ CmdSpec) => HasRaw a where
+class HasRaw a where
   _Raw :: Prism' a (FilePath, [String])
-  _Raw = _RawCommand
   {-# MINIMAL _Raw #-}
 
 instance HasRaw CmdSpec where

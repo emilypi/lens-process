@@ -15,7 +15,7 @@ bug-reports:           https://github.com/emilypi/lens-process/issues
 license:               BSD3
 license-file:          LICENSE
 author:                Emily Pillmore
-maintainer:            Emily Pillmore <emily@cohomolo.gy>
+maintainer:            Emily Pillmore <emilypi@cohomolo.gy>
 copyright:             (c) 2019 Emily Pillmore
 category:              System
 build-type:            Simple
