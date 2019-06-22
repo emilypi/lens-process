@@ -51,8 +51,23 @@ module System.Process.Lens
 , handling
 , nostreaming
 , arguing
+  -- * System Process
+, proc
+, shell
 ) where
 
+import Control.Lens
+
+import System.Process (CreateProcess(..), CmdSpec(..))
+import qualified System.Process as System
 import System.Process.Lens.CommandSpec
 import System.Process.Lens.CreateProcess
+import System.Process.Lens.Internal
 import System.Process.Lens.StdStream
+
+
+proc :: FilePath -> [String] -> CreateProcess
+proc cmd args = defaultCreateProcess & cmdspec_ .~ RawCommand cmd args
+
+shell :: String -> CreateProcess
+shell cmd = defaultCreateProcess & cmdspec_ .~ ShellCommand cmd

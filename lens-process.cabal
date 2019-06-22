@@ -37,6 +37,7 @@ library
                      , System.Process.Lens.Optics
                      , System.Process.Lens.CommandSpec
                      , System.Process.Lens.CreateProcess
+                     , System.Process.Lens.Internal
                      , System.Process.Lens.StdStream
 
   other-extensions:    MultiParamTypeClasses
