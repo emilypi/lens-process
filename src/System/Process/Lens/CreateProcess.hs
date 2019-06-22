@@ -100,6 +100,11 @@ delegatectlc = lens delegate_ctlc (\t b -> t { delegate_ctlc = b })
 detachconsole :: Lens' CreateProcess Bool
 detachconsole = lens detach_console (\t b -> t { detach_console = b })
 
+-- | Lens into the 'create_new_console' entry of the 'CreateProcess' record
+--
+createnewconsole :: Lens' CreateProcess Bool
+createnewconsole = lens create_new_console (\t b -> t { create_new_console = b })
+
 -- | Lens into the 'new_session' entry of the 'CreateProcess' record
 --
 newsession :: Lens' CreateProcess Bool

@@ -1,7 +1,7 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TypeFamilies #-}
 -- |
--- Module       : Sysetem.Process.Lens.CommandSpec
+-- Module       : System.Process.Lens.CommandSpec
 -- Copyright 	: 2019 Emily Pillmore
 -- License	: BSD
 --

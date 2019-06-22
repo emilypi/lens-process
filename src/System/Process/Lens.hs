@@ -4,9 +4,9 @@
 --
 -- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>
 -- Stability	: Experimental
--- Portability	: Portable
+-- Portability	: TypeFamilies, RankNTypes
 --
--- Just the (classy) optics
+-- Everything all together
 --
 module System.Process.Lens
 ( -- * Optics
