@@ -34,7 +34,7 @@ source-repository head
 
 library
   exposed-modules:     System.Process.Lens
-                     , System.Process.Optics
+                     , System.Process.Lens.Optics
 
   other-modules:       System.Process.Lens.CommandSpec
                      , System.Process.Lens.CreateProcess

@@ -1,4 +1,5 @@
 -- |
+-- Module       : Sysetem.Process.Lens.Optics
 -- Copyright 	: 2019 Emily Pillmore
 -- License	: BSD
 --
@@ -8,7 +9,7 @@
 --
 -- Just the (classy) optics
 --
-module System.Process.Optics
+module System.Process.Lens.Optics
 ( -- * Optics
   _ShellCommand
 , _RawCommand

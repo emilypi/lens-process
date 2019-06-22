@@ -41,8 +41,11 @@ module System.Process.Lens
 , stdoutOf
 , stdinOf
 , stderrOf
-, clearing
 , closing
+, inheriting
+, piping
+, handling
+, nostreaming
 ) where
 
 import System.Process.Lens.CommandSpec

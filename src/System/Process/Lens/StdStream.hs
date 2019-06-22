@@ -1,6 +1,6 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TypeFamilies #-}
-
+{-# LANGUAGE Rank2Types #-}
 -- |
 -- Module       : System.Process.Lens.StdStream
 -- Copyright 	: 2019 Emily Pillmore
@@ -8,7 +8,7 @@
 --
 -- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>
 -- Stability	: Experimental
--- Portability	: TypeFamilies
+-- Portability	: TypeFamilies, Rank2Types
 --
 -- 'StdStream' prisms and classy prisms.
 --

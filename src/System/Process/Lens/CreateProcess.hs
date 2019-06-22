@@ -31,8 +31,11 @@ module System.Process.Lens.CreateProcess
 , stdoutOf
 , stdinOf
 , stderrOf
-, clearing
 , closing
+, inheriting
+, piping
+, handling
+, nostreaming
 ) where
 
 
@@ -135,15 +138,6 @@ stdoutOf = preview $ stdout . _UsesHandle
 stderrOf :: HasUseHandle a => CreateProcess -> Maybe H.Handle
 stderrOf = preview $ stderr . _UsesHandle
 
--- | clear the stdin, stderr, and stdout streams of a 'CreateProcess', deferring to
--- 'Inherit'
---
-clearing :: CreateProcess -> CreateProcess
-clearing c = c
-  & set stderr Inherit
-  & set stdin Inherit
-  & set stdout Inherit
-
 -- | Close something with a prism into a non-standard 'H.Handle' in a 'CreateProcess'
 --
 closing :: HasUseHandle a => Getter CreateProcess a -> CreateProcess -> IO ()
@@ -156,3 +150,26 @@ closing l c = case c ^? l . _UsesHandle of
       , h /= H.stdout
       , h /= H.stderr = H.hClose h
       | otherwise = return ()
+
+-- | Given a lens into a 'StdStream', overwrite to 'Inherit' so that
+-- the stream inherits from its parent process
+--
+inheriting :: Lens' a StdStream -> a -> a
+inheriting l = set l Inherit
+
+-- | Given a lens into a 'StdStream', overwrite to 'CreatePipe', piping
+-- the process
+--
+piping :: Lens' a StdStream -> a -> a
+piping l = set l CreatePipe
+
+-- | Given a lens into a 'StdStream' and a handle, set the handle using
+-- 'UseHandle'.
+--
+handling :: Lens' a StdStream -> H.Handle -> a -> a
+handling l = set l . UseHandle
+
+-- | Given a lens into a 'StdStream', set to 'NoStream'
+--
+nostreaming :: Lens' a StdStream -> a -> a
+nostreaming l = set l NoStream
