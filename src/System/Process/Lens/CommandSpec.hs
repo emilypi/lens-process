@@ -13,6 +13,7 @@ module System.Process.Lens.CommandSpec
 ( -- * Optics
   _ShellCommand
 , _RawCommand
+, arguments
   -- * Classes
 , HasShell(..)
 , HasRaw(..)
@@ -48,6 +49,12 @@ class (a ~ CmdSpec) => HasShell a where
   _Shell = _ShellCommand
   {-# MINIMAL _Shell #-}
 
+-- | 'Traversal'' into the arguments of a command
+--
+arguments :: Traversal' CmdSpec [String]
+arguments = _RawCommand . traverse
+
+
 -- | Classy prism into the shell command of a 'CmdSpec'
 --
 class (a ~ CmdSpec) => HasRaw a where
@@ -58,7 +65,7 @@ class (a ~ CmdSpec) => HasRaw a where
 -- ---------------------------------------------------------- --
 -- Combinators
 
--- | Append arguments to the argument list of a 'RawCommand'
+-- | Append an argument to the argument list of a 'RawCommand'
 --
 arguing :: String -> CmdSpec -> CmdSpec
 arguing s = over (_RawCommand . traverse) (<> [s])
