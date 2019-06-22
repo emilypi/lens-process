@@ -21,6 +21,7 @@ module System.Process.Lens.CreateProcess
 , stderr
 , closefds
 , creategroup
+, createnewconsole
 , delegatectlc
 , detachconsole
 , newsession
