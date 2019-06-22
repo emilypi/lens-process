@@ -138,6 +138,9 @@ useprocessjobs = lens use_process_jobs (\t b -> t { use_process_jobs = b })
 class HasStdin a where
   _Stdin :: Lens' a StdStream
 
+instance HasStdin StdStream where
+  _Stdin = id
+
 instance HasStdin CreateProcess where
   _Stdin = stdin
 
@@ -145,6 +148,9 @@ instance HasStdin CreateProcess where
 --
 class HasStdout a where
   _Stdout :: Lens' a StdStream
+
+instance HasStdout StdStream where
+  _Stdout = id
 
 instance HasStdout CreateProcess where
   _Stdout = stdout
@@ -154,6 +160,9 @@ instance HasStdout CreateProcess where
 class HasStderr a where
   _Stderr :: Lens' a StdStream
 
+instance HasStderr StdStream where
+  _Stderr = id
+  
 instance HasStderr CreateProcess where
   _Stderr = stderr
 
