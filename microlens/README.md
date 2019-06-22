@@ -5,9 +5,8 @@
 
 ### This package is still in Beta!
 
-This package is intended to be on the lighter side, with few dependencies aside from `microlens`. For full disclosure, this is the minimal dependency graph of `microlens-process`:
+This package is intended to be on the lighter side, with few dependencies aside from `microlens`.
 
-![microlens-process dependencies](dependencies.png)
 
 ### Motivation
 
