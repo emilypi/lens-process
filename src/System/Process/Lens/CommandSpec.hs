@@ -54,12 +54,18 @@ class (a ~ CmdSpec) => HasShell a where
   _Shell = _ShellCommand
   {-# MINIMAL _Shell #-}
 
+instance HasShell CmdSpec where
+  _Shell = _ShellCommand
+
 -- | Classy prism into the shell command of a 'CmdSpec'
 --
 class (a ~ CmdSpec) => HasRaw a where
   _Raw :: Prism' a (FilePath, [String])
   _Raw = _RawCommand
   {-# MINIMAL _Raw #-}
+
+instance HasRaw CmdSpec where
+  _Raw = _RawCommand
 
 -- ---------------------------------------------------------- --
 -- Combinators

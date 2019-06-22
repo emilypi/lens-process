@@ -68,6 +68,9 @@ class (a ~ StdStream) => HasInherit a where
   _Inherits = _Inherit
   {-# MINIMAL _Inherits #-}
 
+instance HasInherit StdStream where
+  _Inherits = _Inherit
+
 -- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
@@ -75,6 +78,10 @@ class (a ~ StdStream) => HasUseHandle a where
   _UsesHandle :: Prism' a Handle
   _UsesHandle = _UseHandle
   {-# MINIMAL _UsesHandle #-}
+
+instance HasUseHandle StdStream where
+  _UsesHandle = _UseHandle
+
 -- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
@@ -82,6 +89,10 @@ class (a ~ StdStream) => HasCreatePipe a where
   _CreatesPipe :: Prism' a StdStream
   _CreatesPipe = _CreatePipe
   {-# MINIMAL _CreatesPipe #-}
+
+instance HasCreatePipe StdStream where
+  _CreatesPipe = _CreatePipe
+
 -- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
@@ -89,3 +100,6 @@ class (a ~ StdStream) => HasNoStream a where
   _NoStreams :: Prism' a StdStream
   _NoStreams = _NoStream
   {-# MINIMAL _NoStreams #-}
+
+instance HasNoStream StdStream where
+  _NoStreams = _NoStream

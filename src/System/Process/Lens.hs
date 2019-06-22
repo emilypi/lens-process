@@ -12,6 +12,7 @@ module System.Process.Lens
 ( -- * Optics
   _ShellCommand
 , _RawCommand
+, arguments
 , _Inherit
 , _UseHandle
 , _CreatePipe
@@ -46,6 +47,7 @@ module System.Process.Lens
 , piping
 , handling
 , nostreaming
+, arguing
 ) where
 
 import System.Process.Lens.CommandSpec
