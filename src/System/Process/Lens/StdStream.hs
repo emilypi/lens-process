@@ -24,7 +24,7 @@ module System.Process.Lens.StdStream
 , IsCreatePipe(..)
 , IsNoStream(..)
   -- * Combinators
-, useHandle
+, usehandleOf
 ) where
 
 import Control.Lens
@@ -113,5 +113,6 @@ instance IsNoStream StdStream where
 
 -- | Inject a handle into something with a prism into the handle
 --
-useHandle :: IsUseHandle a => Handle -> a
-useHandle h = _UsesHandle # h
+usehandleOf :: IsUseHandle a => Handle -> a
+usehandleOf h = _UsesHandle # h
+

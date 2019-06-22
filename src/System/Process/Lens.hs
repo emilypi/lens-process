@@ -51,6 +51,9 @@ module System.Process.Lens
 , handling
 , nostreaming
 , arguing
+, rawOf
+, shellOf
+, usehandleOf
   -- * System Process
 , proc
 , shell

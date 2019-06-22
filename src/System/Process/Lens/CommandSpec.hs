@@ -20,6 +20,8 @@ module System.Process.Lens.CommandSpec
 , IsRaw(..)
   -- * Combinators
 , arguing
+, shellOf
+, rawOf
 ) where
 
 import Control.Lens
@@ -73,3 +75,15 @@ instance IsRaw CmdSpec where
 --
 arguing :: String -> CmdSpec -> CmdSpec
 arguing s = arguments <>~ [s]
+
+-- | Lift a 'String' into a type via 'ShellCommand' with a prism into the
+-- command
+--
+shellOf :: IsShell a => String -> a
+shellOf s = _Shell # s
+
+-- | Lift a 'FilePath' and list of arguments into a type via 'RawCommand'
+-- with a prism into the command
+--
+rawOf :: IsRaw a => FilePath -> [String] -> a
+rawOf fp ss = _Raw # (fp,ss)
