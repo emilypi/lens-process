@@ -42,18 +42,17 @@ _RawCommand = prism' (uncurry RawCommand) $ \case
   RawCommand fp s -> Just (fp, s)
   _ -> Nothing
 
+-- | 'Traversal'' into the arguments of a command
+--
+arguments :: Traversal' CmdSpec [String]
+arguments = _RawCommand . traverse
+
 -- | Classy prism into the shell command of a 'CmdSpec'
 --
 class (a ~ CmdSpec) => HasShell a where
   _Shell :: Prism' a String
   _Shell = _ShellCommand
   {-# MINIMAL _Shell #-}
-
--- | 'Traversal'' into the arguments of a command
---
-arguments :: Traversal' CmdSpec [String]
-arguments = _RawCommand . traverse
-
 
 -- | Classy prism into the shell command of a 'CmdSpec'
 --
@@ -68,4 +67,4 @@ class (a ~ CmdSpec) => HasRaw a where
 -- | Append an argument to the argument list of a 'RawCommand'
 --
 arguing :: String -> CmdSpec -> CmdSpec
-arguing s = over (_RawCommand . traverse) (<> [s])
+arguing s = arguments <>~ [s]
