@@ -25,10 +25,6 @@ module System.Process.Microlens
 , childgroup
 , childuser
 , useprocessjobs
-, hstdin
-, hstdout
-, hstderr
-, hhandle
   -- * Classy Lenses
 , HasStdin(..)
 , HasStdout(..)

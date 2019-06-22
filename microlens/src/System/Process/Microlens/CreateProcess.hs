@@ -37,7 +37,7 @@ module System.Process.Microlens.CreateProcess
 ) where
 
 
-import Control.Lens
+import Lens.Micro
 
 import qualified System.IO as H
 import System.Posix.Types
@@ -163,7 +163,7 @@ instance HasStderr CreateProcess where
 
 -- | Close something with a prism into a non-standard 'H.Handle' in a 'CreateProcess'
 --
-closing :: Getter CreateProcess StdStream -> CreateProcess -> IO ()
+closing :: Lens' CreateProcess StdStream -> CreateProcess -> IO ()
 closing l c = case c ^. l of
   UseHandle h -> go h
   _ -> return ()

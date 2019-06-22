@@ -1,4 +1,4 @@
-# lens-process
+# microlens-process
 
 [![Hackage](https://img.shields.io/hackage/v/microlens-process.svg)](https://hackage.haskell.org/package/microlens-process)
 [![Build Status](https://travis-ci.org/emilypi/lens-process.svg?branch=master)](https://travis-ci.org/emilypi/lens-process)
