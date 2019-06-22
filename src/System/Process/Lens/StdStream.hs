@@ -2,6 +2,7 @@
 {-# LANGUAGE TypeFamilies #-}
 
 -- |
+-- Module       : System.Process.Lens.StdStream
 -- Copyright 	: 2019 Emily Pillmore
 -- License	: BSD
 --
