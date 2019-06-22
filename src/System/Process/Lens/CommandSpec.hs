@@ -10,11 +10,12 @@
 -- Portability	: TypeFamilies
 --
 module System.Process.Lens.CommandSpec
-( -- * Optics
-  _ShellCommand
+( -- * Traversals
+  arguments
+  -- * Prisms
+, _ShellCommand
 , _RawCommand
-, arguments
-  -- * Classes
+  -- * Classy Prisms
 , IsShell(..)
 , IsRaw(..)
   -- * Combinators

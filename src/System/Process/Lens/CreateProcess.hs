@@ -12,7 +12,7 @@
 -- 'CreateProcess' lenses and combinators
 --
 module System.Process.Lens.CreateProcess
-( -- * Optics
+( -- * Lenses
   cmdspec_
 , cwd_
 , env_
@@ -28,7 +28,7 @@ module System.Process.Lens.CreateProcess
 , childgroup
 , childuser
 , useprocessjobs
-  -- * Classes
+  -- * Classy Lenses
 , HasStdin(..)
 , HasStdout(..)
 , HasStderr(..)

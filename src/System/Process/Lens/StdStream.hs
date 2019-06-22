@@ -13,12 +13,12 @@
 -- 'StdStream' prisms and classy prisms.
 --
 module System.Process.Lens.StdStream
-( -- * Optics
+( -- * Prisms
   _Inherit
 , _UseHandle
 , _CreatePipe
 , _NoStream
-  -- * Classes
+  -- * Classy Prisms
 , IsInherit(..)
 , IsUseHandle(..)
 , IsCreatePipe(..)

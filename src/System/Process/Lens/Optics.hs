@@ -10,13 +10,16 @@
 -- Just the (classy) optics
 --
 module System.Process.Lens.Optics
-( -- * Optics
+( -- * Prisms
   _ShellCommand
 , _RawCommand
 , _Inherit
 , _UseHandle
 , _CreatePipe
 , _NoStream
+  -- * Isos
+, _Handler
+  -- * Lenses
 , cmdspec_
 , cwd_
 , env_
@@ -31,13 +34,18 @@ module System.Process.Lens.Optics
 , childgroup
 , childuser
 , useprocessjobs
-  -- * Classes
+, hstdin
+, hstdout
+, hstderr
+, hhandle
+  -- * Classy Prisms
 , IsRaw(..)
 , IsShell(..)
 , IsInherit(..)
 , IsUseHandle(..)
 , IsCreatePipe(..)
 , IsNoStream(..)
+  -- * Classy Lenses
 , HasStdin(..)
 , HasStdout(..)
 , HasStderr(..)
@@ -45,4 +53,5 @@ module System.Process.Lens.Optics
 
 import System.Process.Lens.CommandSpec
 import System.Process.Lens.CreateProcess
+import System.Process.Lens.Internal
 import System.Process.Lens.StdStream

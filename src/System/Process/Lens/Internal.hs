@@ -1,8 +1,9 @@
 module System.Process.Lens.Internal
 ( -- * Types
   ProcessHandler(..)
-  -- * Optics
+  -- * Isos
 , _Handler
+  -- * Lenses
 , hstdin
 , hstdout
 , hstderr
