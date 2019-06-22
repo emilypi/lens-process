@@ -46,12 +46,9 @@ library
 
 
   build-depends:       base       >= 4.4    && < 5
-                     , directory  >= 1.1    && < 1.4
                      , filepath   >= 1.2    && < 1.5
                      , lens       >= 4.17   && < 4.18
                      , process    >= 1.6    && < 1.7
-                     , stm        >= 2.5    && < 2.6
-                     , mtl        >= 2.2    && < 2.3
 
   hs-source-dirs:      src
   ghc-options:         -Wall
@@ -64,12 +61,9 @@ test-suite lens-process-tests
   type:                exitcode-stdio-1.0
 
   build-depends:       base       >= 4.4    && < 5
-                     , directory  >= 1.1    && < 1.4
                      , filepath   >= 1.2    && < 1.5
                      , lens       >= 4.17   && < 4.18
                      , process    >= 1.6    && < 1.7
-                     , stm        >= 2.5    && < 2.6
-                     , mtl        >= 2.2    && < 2.3
                      , tasty
 
   hs-source-dirs:      test

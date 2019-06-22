@@ -34,7 +34,6 @@ _ShellCommand = prism' ShellCommand $ \case
   ShellCommand s -> Just s
   _ -> Nothing
 
-
 -- | A prism into the 'RawCommand' case of a 'CmdSpec'
 --
 _RawCommand :: Prism' CmdSpec (FilePath, [String])
@@ -47,12 +46,14 @@ _RawCommand = prism' (uncurry RawCommand) $ \case
 class (a ~ CmdSpec) => HasShell a where
   _Shell :: Prism' a String
   _Shell = _ShellCommand
+  {-# MINIMAL _Shell #-}
 
 -- | Classy prism into the shell command of a 'CmdSpec'
 --
 class (a ~ CmdSpec) => HasRaw a where
   _Raw :: Prism' a (FilePath, [String])
   _Raw = _RawCommand
+  {-# MINIMAL _Raw #-}
 
 -- ---------------------------------------------------------- --
 -- Combinators
