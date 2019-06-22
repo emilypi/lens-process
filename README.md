@@ -37,7 +37,7 @@ myStdInProcess
   => a -> (b -> IO c) -> IO c
 myStdInProcess cp f = do
   handler <- createProcess cp
-  case handler ^? hstdin . _Just . re _UsesHandle of
+  case handler ^? _Stdin . _Just . re _UsesHandle of
     Nothing -> error "oh no!"
     Just t -> f t
 
