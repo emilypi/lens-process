@@ -19,10 +19,12 @@ module System.Process.Lens.StdStream
 , _CreatePipe
 , _NoStream
   -- * Classes
-, HasInherit(..)
-, HasUseHandle(..)
-, HasCreatePipe(..)
-, HasNoStream(..)
+, IsInherit(..)
+, IsUseHandle(..)
+, IsCreatePipe(..)
+, IsNoStream(..)
+  -- * Combinators
+, useHandle
 ) where
 
 import Control.Lens
@@ -30,6 +32,9 @@ import Control.Lens
 import System.IO (Handle)
 import System.Process
 
+
+-- ---------------------------------------------------------- --
+-- Optics
 
 -- | A prism into the 'Inherit' structure of a 'StdStream'
 --
@@ -59,43 +64,54 @@ _NoStream = prism' (const NoStream) $ \case
   NoStream -> Just NoStream
   _ -> Nothing
 
+-- ---------------------------------------------------------- --
+-- Classes
+
 -- | Class constraint proving a type has a prism into an 'Inherit'
 -- structure. In general, this seems redundant, however, this class
 -- is a proof on `a` that `a` is an 'Inherit', which is a wonderful
 -- thing to prove.
-class HasInherit a where
+class IsInherit a where
   _Inherits :: Prism' a StdStream
   {-# MINIMAL _Inherits #-}
 
-instance HasInherit StdStream where
+instance IsInherit StdStream where
   _Inherits = _Inherit
 
 -- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
-class HasUseHandle a where
+class IsUseHandle a where
   _UsesHandle :: Prism' a Handle
   {-# MINIMAL _UsesHandle #-}
 
-instance HasUseHandle StdStream where
+instance IsUseHandle StdStream where
   _UsesHandle = _UseHandle
 
 -- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
-class HasCreatePipe a where
+class IsCreatePipe a where
   _CreatesPipe :: Prism' a StdStream
   {-# MINIMAL _CreatesPipe #-}
 
-instance HasCreatePipe StdStream where
+instance IsCreatePipe StdStream where
   _CreatesPipe = _CreatePipe
 
 -- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
-class HasNoStream a where
+class IsNoStream a where
   _NoStreams :: Prism' a StdStream
   {-# MINIMAL _NoStreams #-}
 
-instance HasNoStream StdStream where
+instance IsNoStream StdStream where
   _NoStreams = _NoStream
+
+-- ---------------------------------------------------------- --
+-- Combinators
+
+-- | Inject a handle into something with a prism into the handle
+--
+useHandle :: IsUseHandle a => Handle -> a
+useHandle h = _UsesHandle # h

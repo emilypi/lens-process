@@ -28,6 +28,10 @@ module System.Process.Lens.CreateProcess
 , childgroup
 , childuser
 , useprocessjobs
+  -- * Classes
+, HasStdin(..)
+, HasStdout(..)
+, HasStderr(..)
   -- * Combinators
 , stdoutOf
 , stdinOf
@@ -127,6 +131,33 @@ useprocessjobs :: Lens' CreateProcess Bool
 useprocessjobs = lens use_process_jobs (\t b -> t { use_process_jobs = b })
 
 -- ---------------------------------------------------------- --
+-- Classes
+
+-- | Classy lens for types with a stdin
+--
+class HasStdin a where
+  _Stdin :: Lens' a StdStream
+
+instance HasStdin CreateProcess where
+  _Stdin = stdin
+
+-- | Classy lens for types with a stdout
+--
+class HasStdout a where
+  _Stdout :: Lens' a StdStream
+
+instance HasStdout CreateProcess where
+  _Stdout = stdout
+
+-- | Classy lens for types with a stderr
+--
+class HasStderr a where
+  _Stderr :: Lens' a StdStream
+
+instance HasStderr CreateProcess where
+  _Stderr = stderr
+
+-- ---------------------------------------------------------- --
 -- Combinators
 
 -- | Retrieve the stdout handle associated with a 'CreateProcess'
@@ -146,7 +177,7 @@ stderrOf = preview $ stderr . _UsesHandle
 
 -- | Close something with a prism into a non-standard 'H.Handle' in a 'CreateProcess'
 --
-closing :: HasUseHandle a => Getter CreateProcess a -> CreateProcess -> IO ()
+closing :: IsUseHandle a => Getter CreateProcess a -> CreateProcess -> IO ()
 closing l c = case c ^? l . _UsesHandle of
     Nothing -> return ()
     Just h -> go h
@@ -160,22 +191,22 @@ closing l c = case c ^? l . _UsesHandle of
 -- | Given a lens into a 'StdStream', overwrite to 'Inherit' so that
 -- the stream inherits from its parent process
 --
-inheriting :: Lens' a StdStream -> a -> a
+inheriting :: IsInherit a => Lens' a StdStream -> a -> a
 inheriting l = set l Inherit
 
 -- | Given a lens into a 'StdStream', overwrite to 'CreatePipe', piping
 -- the process
 --
-piping :: Lens' a StdStream -> a -> a
+piping :: IsCreatePipe a => Lens' a StdStream -> a -> a
 piping l = set l CreatePipe
 
 -- | Given a lens into a 'StdStream' and a handle, set the handle using
 -- 'UseHandle'.
 --
-handling :: Lens' a StdStream -> H.Handle -> a -> a
-handling l = set l . UseHandle
+handling :: IsUseHandle a => Lens' a StdStream -> H.Handle -> a -> a
+handling l = set $ l . _UseHandle
 
 -- | Given a lens into a 'StdStream', set to 'NoStream'
 --
-nostreaming :: Lens' a StdStream -> a -> a
+nostreaming :: IsNoStream a => Lens' a StdStream -> a -> a
 nostreaming l = set l NoStream

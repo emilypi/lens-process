@@ -32,12 +32,15 @@ module System.Process.Lens.Optics
 , childuser
 , useprocessjobs
   -- * Classes
-, HasRaw(..)
-, HasShell(..)
-, HasInherit(..)
-, HasUseHandle(..)
-, HasCreatePipe(..)
-, HasNoStream(..)
+, IsRaw(..)
+, IsShell(..)
+, IsInherit(..)
+, IsUseHandle(..)
+, IsCreatePipe(..)
+, IsNoStream(..)
+, HasStdin(..)
+, HasStdout(..)
+, HasStderr(..)
 ) where
 
 import System.Process.Lens.CommandSpec

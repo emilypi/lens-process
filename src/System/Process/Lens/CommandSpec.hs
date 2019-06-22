@@ -15,8 +15,8 @@ module System.Process.Lens.CommandSpec
 , _RawCommand
 , arguments
   -- * Classes
-, HasShell(..)
-, HasRaw(..)
+, IsShell(..)
+, IsRaw(..)
   -- * Combinators
 , arguing
 ) where
@@ -49,20 +49,20 @@ arguments = _RawCommand . traverse
 
 -- | Classy prism into the shell command of a 'CmdSpec'
 --
-class HasShell a where
+class IsShell a where
   _Shell :: Prism' a String
   {-# MINIMAL _Shell #-}
 
-instance HasShell CmdSpec where
+instance IsShell CmdSpec where
   _Shell = _ShellCommand
 
 -- | Classy prism into the shell command of a 'CmdSpec'
 --
-class HasRaw a where
+class IsRaw a where
   _Raw :: Prism' a (FilePath, [String])
   {-# MINIMAL _Raw #-}
 
-instance HasRaw CmdSpec where
+instance IsRaw CmdSpec where
   _Raw = _RawCommand
 
 -- ---------------------------------------------------------- --
