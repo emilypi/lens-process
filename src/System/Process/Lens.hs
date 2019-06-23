@@ -43,7 +43,6 @@ module System.Process.Lens
 , HasStdout(..)
 , HasStderr(..)
   -- * Combinators
-, closing
 , inheriting
 , piping
 , handling

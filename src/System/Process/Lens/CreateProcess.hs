@@ -32,7 +32,6 @@ module System.Process.Lens.CreateProcess
 , HasStdout(..)
 , HasStderr(..)
   -- * Combinators
-, closing
 , inheriting
 , piping
 , handling
@@ -164,19 +163,6 @@ instance HasStderr CreateProcess where
 
 -- ---------------------------------------------------------- --
 -- Combinators
-
--- | Close something with a prism into a non-standard 'H.Handle' in a 'CreateProcess'
---
-closing :: IsUseHandle a => Getter CreateProcess a -> CreateProcess -> IO ()
-closing l c = case c ^? l . _UsesHandle of
-    Nothing -> return ()
-    Just h -> go h
-  where
-    go h
-      | h /= H.stdin
-      , h /= H.stdout
-      , h /= H.stderr = H.hClose h
-      | otherwise = return ()
 
 -- | Given a lens into a 'StdStream', overwrite to 'Inherit' so that
 -- the stream inherits from its parent process
