@@ -1,4 +1,15 @@
-module System.Process.Lens.Internal
+-- |
+-- Module       : Sysetem.Process.Lens.Optics
+-- Copyright 	: 2019 Emily Pillmore
+-- License	: BSD
+--
+-- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>
+-- Stability	: Experimental
+-- Portability	: TypeFamilies, Rank2Types
+--
+-- Just the (classy) optics
+--
+module System.Process.Lens.ProcessHandler
 ( -- * Types
   ProcessHandler(..)
   -- * Isos
@@ -18,6 +29,7 @@ import Control.Lens
 import System.IO
 import System.Process
 
+
 -- | A convenient handler for the output of a 'createProcess' call.
 -- This data containes 4 components:
 --
@@ -34,6 +46,7 @@ data ProcessHandler =
     , _hstderr :: Maybe Handle
     , _hhandle :: ProcessHandle
     }
+
 
 -- | A lens into the stdin handle if requested
 --

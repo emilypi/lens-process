@@ -15,7 +15,8 @@
 -- name convention, some record accessors don't have an apparently
 -- "good" name for their corresponding lens. Those that do not are
 -- post-fixed with `_` i order to denote their lens status. Thankfully,
--- there are only 3 that meet the criteria: 'cmdspec_', 'env_', and 'cwd_'.
+-- there are 6 that meet the criteria: 'cmdspec_', 'env_', 'cwd_', 'stdin_',
+-- 'stdout_', and 'stderr_'.
 --
 -- We provide classy variants of what we consider the significant portions
 -- of 'CreateProcess' - namely, the `std_in`, `std_out`, and `std_err` entries.
@@ -26,9 +27,9 @@ module System.Process.Lens.CreateProcess
   cmdspec_
 , cwd_
 , env_
-, stdin
-, stdout
-, stderr
+, stdin_
+, stdout_
+, stderr_
 , closefds
 , creategroup
 , createnewconsole
@@ -56,6 +57,7 @@ import System.Process
 
 -- | Lens into the 'cmdspec' entry of the 'CreateProcess' record
 --
+--
 cmdspec_ :: Lens' CreateProcess CmdSpec
 cmdspec_ = lens cmdspec (\t b -> t { cmdspec = b })
 
@@ -71,18 +73,18 @@ env_ = lens env (\t b -> t { env = b })
 
 -- | Lens into the 'std_in' entry of the 'CreateProcess' record
 --
-stdin :: Lens' CreateProcess StdStream
-stdin = lens std_in (\t b -> t { std_in = b })
+stdin_ :: Lens' CreateProcess StdStream
+stdin_ = lens std_in (\t b -> t { std_in = b })
 
 -- | Lens into the 'std_out' entry of the 'CreateProcess' record
 --
-stdout :: Lens' CreateProcess StdStream
-stdout = lens std_out (\t b -> t { std_out = b })
+stdout_ :: Lens' CreateProcess StdStream
+stdout_ = lens std_out (\t b -> t { std_out = b })
 
 -- | Lens into the 'std_err' entry of the 'CreateProcess' record
 --
-stderr :: Lens' CreateProcess StdStream
-stderr = lens std_err (\t b -> t { std_err = b })
+stderr_ :: Lens' CreateProcess StdStream
+stderr_ = lens std_err (\t b -> t { std_err = b })
 
 -- | Lens into the 'close_fds' entry of the 'CreateProcess' record
 --
@@ -141,7 +143,7 @@ instance HasStdin StdStream where
   _Stdin = id
 
 instance HasStdin CreateProcess where
-  _Stdin = stdin
+  _Stdin = stdin_
 
 -- | Classy lens for types with a stdout
 --
@@ -152,7 +154,7 @@ instance HasStdout StdStream where
   _Stdout = id
 
 instance HasStdout CreateProcess where
-  _Stdout = stdout
+  _Stdout = stdout_
 
 -- | Classy lens for types with a stderr
 --
@@ -163,4 +165,4 @@ instance HasStderr StdStream where
   _Stderr = id
 
 instance HasStderr CreateProcess where
-  _Stderr = stderr
+  _Stderr = stderr_

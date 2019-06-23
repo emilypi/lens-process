@@ -14,6 +14,7 @@ import Control.Lens
 
 import System.Process
 import System.Process.Lens
+import System.Process.Lens.ProcessHandler
 
 import Test.Tasty
 import Test.Tasty.HUnit
@@ -22,8 +23,6 @@ main :: IO ()
 main = defaultMain $
   testGroup "Lens Process Tests"
   [ cmdSpecTests
-  , createProcessTests
-  , stdStreamTests
   ]
 
 cmdSpecTests :: TestTree
@@ -32,28 +31,16 @@ cmdSpecTests = testGroup "CmdSpec tests"
   , testGroup "instances are sound" csinstances
   , testGroup "combinators are sound" cscombinators
   ]
-createProcessTests :: TestTree
-createProcessTests = testGroup "CreateProcess tests"
-  [ testCase "optics are sound" mempty
-  , testCase "combinators are sound" mempty
-  ]
-
-stdStreamTests :: TestTree
-stdStreamTests = testGroup "CmdSpec tests"
-  [ testCase "optics are sound" mempty
-  , testCase "instances are sound" mempty
-  , testCase "combinators are sound" mempty
-  ]
 
 csoptics :: [TestTree]
 csoptics =
-  [ testCase "cmdspec optic" $ def ^. cmdspec_ .  _ShellCommand @?= ""
-  , testCase "cwd optic" $ def ^. cwd_ @?= Nothing
-  , testCase "std_in optic" $ def ^. stdin @?= Inherit
+  [ testCase "cmdspec optic" $ defaultCreateProcess ^. cmdspec_ .  _ShellCommand @?= ""
+  , testCase "cwd optic" $ defaultCreateProcess ^. cwd_ @?= Nothing
+  , testCase "std_in optic" $ defaultCreateProcess ^. stdin_ @?= Inherit
   , testCase "amend args" $ go ^. cmdspec_ . arguments @?= ["-l", "-a"]
   ]
   where
-    go = def
+    go = defaultCreateProcess
       & cmdspec_ .~ RawCommand "ls" ["-l"]
       & cmdspec_ . arguments <>~ ["-a"]
 
@@ -63,34 +50,15 @@ cscombinators =
     arguing "-a" (go ^. cmdspec_) @?= RawCommand "ls" ["-l", "-a"]
   ]
   where
-    go = def & cmdspec_ .~ RawCommand "ls" ["-l"]
+    go = defaultCreateProcess & cmdspec_ .~ RawCommand "ls" ["-l"]
 
 csinstances :: [TestTree]
 csinstances =
   [ testCase "_Shell shells out" $
-    def ^. cmdspec_ . _Shell @?= ""
+    defaultCreateProcess ^. cmdspec_ . _Shell @?= ""
 
   , testCase "_Raw is war_" $
     go ^. cmdspec_ . _Raw . traverse @?= ["-l"]
   ]
   where
-    go = def & cmdspec_ .~ RawCommand "ls" ["-l"]
-
-def :: CreateProcess
-def = CreateProcess
-  { cmdspec = ShellCommand ""
-  , cwd = Nothing
-  , env = Nothing
-  , std_in = Inherit
-  , std_out = Inherit
-  , std_err = Inherit
-  , close_fds = False
-  , create_group = False
-  , delegate_ctlc = False
-  , detach_console = False
-  , create_new_console = False
-  , new_session = False
-  , child_group = Nothing
-  , child_user = Nothing
-  , use_process_jobs = False
-  }
+    go = defaultCreateProcess & cmdspec_ .~ RawCommand "ls" ["-l"]

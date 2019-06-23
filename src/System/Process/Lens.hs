@@ -16,7 +16,9 @@
 -- in the #haskell-lens channel.
 --
 module System.Process.Lens
-( -- * Optics
+( -- * Data
+  ProcessHandler(..)
+, -- * Prisms
   _ShellCommand
 , _RawCommand
 , arguments
@@ -24,12 +26,15 @@ module System.Process.Lens
 , _UseHandle
 , _CreatePipe
 , _NoStream
+  -- * Isos
+, _Handler
+  -- * Lenses
 , cmdspec_
 , cwd_
 , env_
-, stdin
-, stdout
-, stderr
+, stdin_
+, stdout_
+, stderr_
 , closefds
 , creategroup
 , delegatectlc
@@ -38,6 +43,10 @@ module System.Process.Lens
 , childgroup
 , childuser
 , useprocessjobs
+, hstdin
+, hstdout
+, hstderr
+, hhandle
   -- * Classes
 , IsRaw(..)
 , IsShell(..)
@@ -62,4 +71,5 @@ module System.Process.Lens
 
 import System.Process.Lens.CommandSpec
 import System.Process.Lens.CreateProcess
+import System.Process.Lens.ProcessHandler
 import System.Process.Lens.StdStream

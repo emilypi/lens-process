@@ -4,17 +4,17 @@ let
 
   inherit (nixpkgs) pkgs;
 
-  f = { mkDerivation, base,filepath, lens, process, stdenv, tasty
+  f = { mkDerivation, base, cabal-doctest, filepath, lens, process
+      , stdenv, tasty, tasty-hunit
       }:
       mkDerivation {
         pname = "lens-process";
         version = "0.1.0.0";
         src = ./.;
-        libraryHaskellDepends = [
-          base filepath lens process
-        ];
+        setupHaskellDepends = [ base cabal-doctest ];
+        libraryHaskellDepends = [ base filepath lens process ];
         testHaskellDepends = [
-          base filepath lens process tasty
+          base cabal-doctest filepath lens process tasty tasty-hunit
         ];
         homepage = "https://github.com/emilypi/lens-process";
         description = "Optics for system processes";

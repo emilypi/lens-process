@@ -39,10 +39,27 @@ import Control.Lens
 import System.Process
 
 
+-- $setup
+-- >>> import Control.Lens
+-- >>> import System.Process
+-- >>> :set -XTypeApplications
+-- >>> :set -XRank2Types
+
 -- ---------------------------------------------------------- --
 -- Optics
 
 -- | A prism into the 'ShellCommand' case of a 'CmdSpec'
+--
+-- Examples:
+--
+-- >>> _ShellCommand # "ls -l"
+-- ShellCommand "ls -l"
+--
+-- >>> ShellCommand "ls -l" ^? _ShellCommand
+-- Just "ls -l"
+--
+-- >>> RawCommand "/bin/ls" ["-l"] ^? _ShellCommand
+-- Nothing
 --
 _ShellCommand :: Prism' CmdSpec String
 _ShellCommand = prism' ShellCommand $ \c -> case c of
@@ -51,12 +68,32 @@ _ShellCommand = prism' ShellCommand $ \c -> case c of
 
 -- | A prism into the 'RawCommand' case of a 'CmdSpec'
 --
+-- Examples:
+--
+-- >>> RawCommand "/bin/ls" ["-l"] ^? _RawCommand
+-- Just ("/bin/ls",["-l"])
+--
+-- >>> RawCommand "/bin/ls" ["-l"] ^? _ShellCommand
+-- Nothing
+--
+-- >>> RawCommand "/bin/ls" ["-l"] ^. _RawCommand . _1
+-- "/bin/ls"
+--
+-- >>> RawCommand "/bin/ls" ["-l"] ^. _RawCommand . _2
+-- ["-l"]
+--
 _RawCommand :: Prism' CmdSpec (FilePath, [String])
 _RawCommand = prism' (uncurry RawCommand) $ \c -> case c of
   RawCommand fp s -> Just (fp, s)
   _ -> Nothing
 
 -- | Classy prism into the shell command of a 'CmdSpec'
+--
+-- Examples:
+--
+-- >>> f :: IsShell a => a -> Maybe String; f = preview _Shell
+-- >>> f $ _ShellCommand # "ls -l"
+-- Just "ls -l"
 --
 class IsShell a where
   _Shell :: Prism' a String
@@ -67,6 +104,12 @@ instance IsShell CmdSpec where
 
 -- | Classy prism into the raw command of a 'CmdSpec'
 --
+-- Examples:
+--
+-- >>> f :: IsRaw a => a -> Maybe FilePath; f = preview (_Raw . _1)
+-- >>> f $ _RawCommand # ("/bin/ls", ["ls -l"])
+-- Just "/bin/ls"
+--
 class IsRaw a where
   _Raw :: Prism' a (FilePath, [String])
   {-# MINIMAL _Raw #-}
@@ -76,6 +119,11 @@ instance IsRaw CmdSpec where
 
 -- | 'Traversal'' into the arguments of a command
 --
+-- Examples:
+--
+-- >>> RawCommand "/bin/ls" ["-l"] ^. arguments
+-- ["-l"]
+--
 arguments :: IsRaw a => Traversal' a [String]
 arguments = _Raw . traverse
 
@@ -84,17 +132,34 @@ arguments = _Raw . traverse
 
 -- | Append an argument to the argument list of a 'RawCommand'
 --
+-- Examples:
+--
+-- >>> arguing "-h" $ RawCommand "/bin/ls" ["-l"]
+-- RawCommand "/bin/ls" ["-l","-h"]
+--
+-- >>> arguing "-h" (RawCommand "/bin/ls" ["-l"]) ^. arguments
+-- ["-l","-h"]
+--
 arguing :: IsRaw a => String -> a -> a
 arguing s = arguments <>~ [s]
 
 -- | Lift a 'String' into a type via 'ShellCommand' with a prism into the
--- command
+--
+-- Examples:
+--
+-- >>> shellOf @CmdSpec "ls"
+-- ShellCommand "ls"
 --
 shellOf :: IsShell a => String -> a
 shellOf s = _Shell # s
 
 -- | Lift a 'FilePath' and list of arguments into a type via 'RawCommand'
 -- with a prism into the command
+--
+-- Examples:
+--
+-- >>> rawOf @CmdSpec "/bin/ls" ["-l"]
+-- RawCommand "/bin/ls" ["-l"]
 --
 rawOf :: IsRaw a => FilePath -> [String] -> a
 rawOf fp ss = _Raw # (fp,ss)
