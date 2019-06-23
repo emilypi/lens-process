@@ -4,7 +4,7 @@ cabal-version:         >= 1.10
 -- http://haskell.org/cabal/users-guide/
 
 name:                  lens-process
-version:               0.0.5.0
+version:               0.1.0.0
 synopsis:              Optics for system processes
 description:
   'lens-process' is a set of multi-purpose optics and convenience
@@ -38,8 +38,8 @@ library
                      , System.Process.Lens.Optics
                      , System.Process.Lens.CommandSpec
                      , System.Process.Lens.CreateProcess
-                     , System.Process.Lens.Internal
                      , System.Process.Lens.StdStream
+
 
   other-extensions:    MultiParamTypeClasses
                      , RankNTypes
@@ -47,13 +47,10 @@ library
 
 
   build-depends:       base          >= 4.0     && < 5
-                     , contravariant
-                     , exitcode      >= 0.1.0.2 && < 0.1.1
                      , filepath      >= 1.0     && < 1.5
                      , lens          >= 4.0     && < 4.18
-                     , mtl           >= 2.2     && < 2.3
                      , process       >= 1.5     && < 1.7
-                     , stm           >= 2.5     && < 2.6
+
 
   hs-source-dirs:      src
   ghc-options:         -Wall
@@ -66,12 +63,10 @@ test-suite lens-process-tests
   type:                exitcode-stdio-1.0
 
   build-depends:       base       >= 4.4     && < 5
-                     , exitcode   >= 0.1.0.2 && < 0.1.1
                      , filepath   >= 1.2     && < 1.5
                      , lens       >= 4.17    && < 4.18
                      , lens-process
                      , process    >= 1.6     && < 1.7
-                     , stm        >= 2.5     && < 2.6
                      , tasty
                      , tasty-hunit
 

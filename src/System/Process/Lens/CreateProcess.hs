@@ -8,7 +8,18 @@
 -- Stability	: Experimental
 -- Portability	: TypeFamilies, Rank2Types
 --
--- 'CreateProcess' lenses and combinators
+-- This module provides the associated optics and combinators
+-- for working with 'CreateProcess' objects.
+--
+-- Because 'CreateProcess' was created before the `_` prefix record
+-- name convention, some record accessors don't have an apparently
+-- "good" name for their corresponding lens. Those that do not are
+-- post-fixed with `_` i order to denote their lens status. Thankfully,
+-- there are only 3 that meet the criteria: 'cmdspec_', 'env_', and 'cwd_'.
+--
+-- We provide classy variants of what we consider the significant portions
+-- of 'CreateProcess' - namely, the `std_in`, `std_out`, and `std_err` entries.
+--
 --
 module System.Process.Lens.CreateProcess
 ( -- * Lenses
@@ -31,20 +42,13 @@ module System.Process.Lens.CreateProcess
 , HasStdin(..)
 , HasStdout(..)
 , HasStderr(..)
-  -- * Combinators
-, inheriting
-, piping
-, handling
-, nostreaming
 ) where
 
 
 import Control.Lens
 
-import qualified System.IO as H
 import System.Posix.Types
 import System.Process
-import System.Process.Lens.StdStream
 
 
 -- ---------------------------------------------------------- --
@@ -160,29 +164,3 @@ instance HasStderr StdStream where
 
 instance HasStderr CreateProcess where
   _Stderr = stderr
-
--- ---------------------------------------------------------- --
--- Combinators
-
--- | Given a lens into a 'StdStream', overwrite to 'Inherit' so that
--- the stream inherits from its parent process
---
-inheriting :: IsInherit a => Lens' a StdStream -> a -> a
-inheriting l = set l Inherit
-
--- | Given a lens into a 'StdStream', overwrite to 'CreatePipe', piping
--- the process
---
-piping :: IsCreatePipe a => Lens' a StdStream -> a -> a
-piping l = set l CreatePipe
-
--- | Given a lens into a 'StdStream' and a handle, set the handle using
--- 'UseHandle'.
---
-handling :: IsUseHandle a => Lens' a StdStream -> H.Handle -> a -> a
-handling l = set $ l . _UseHandle
-
--- | Given a lens into a 'StdStream', set to 'NoStream'
---
-nostreaming :: IsNoStream a => Lens' a StdStream -> a -> a
-nostreaming l = set l NoStream

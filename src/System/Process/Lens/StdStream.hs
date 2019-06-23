@@ -9,7 +9,10 @@
 -- Stability	: Experimental
 -- Portability	: TypeFamilies, Rank2Types
 --
--- 'StdStream' prisms and classy prisms.
+-- This module provides the associated optics and combinators
+-- for working with 'StdStream' objects. 'StdStream' consists of four
+-- cases, for which we provide prisms and classy variants, as well as
+-- a single 'Review' for the only non-trivial 'Review' - 'UseHandle'.
 --
 module System.Process.Lens.StdStream
 ( -- * Prisms
@@ -24,6 +27,10 @@ module System.Process.Lens.StdStream
 , IsNoStream(..)
   -- * Combinators
 , usehandleOf
+, inheriting
+, piping
+, handling
+, nostreaming
 ) where
 
 import Control.Lens
@@ -114,3 +121,26 @@ instance IsNoStream StdStream where
 --
 usehandleOf :: IsUseHandle a => Handle -> a
 usehandleOf h = _UsesHandle # h
+
+-- | Given a lens into a 'StdStream', overwrite to 'Inherit' so that
+-- the stream inherits from its parent process
+--
+inheriting :: IsInherit a => Lens' a StdStream -> a -> a
+inheriting l = set l Inherit
+
+-- | Given a lens into a 'StdStream', overwrite to 'CreatePipe', piping
+-- the process
+--
+piping :: IsCreatePipe a => Lens' a StdStream -> a -> a
+piping l = set l CreatePipe
+
+-- | Given a lens into a 'StdStream' and a handle, set the handle using
+-- 'UseHandle'.
+--
+handling :: IsUseHandle a => Lens' a StdStream -> Handle -> a -> a
+handling l = set $ l . _UseHandle
+
+-- | Given a lens into a 'StdStream', set to 'NoStream'
+--
+nostreaming :: IsNoStream a => Lens' a StdStream -> a -> a
+nostreaming l = set l NoStream

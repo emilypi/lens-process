@@ -7,7 +7,13 @@
 -- Stability	: Experimental
 -- Portability	: TypeFamilies, RankNTypes
 --
--- Everything all together
+-- This module provides all of the optical exports, as well ask any associated
+-- combinators. For just the optics, see 'System.Process.Lens.Optics', or
+-- if you are in need of something lighter weight, just for working with a
+-- 'CreateProcess' in terms of getters and setters, see <https://hackage.haskell.org/package/microlens>
+--
+-- For more information on usage and how to work with lenses, see <http://github.com/ekmett/lens/wiki> and the tests for example uses. You can also ask questions on Freenode
+-- in the #haskell-lens channel.
 --
 module System.Process.Lens
 ( -- * Optics
@@ -54,26 +60,6 @@ module System.Process.Lens
 ) where
 
 
-import Control.Lens
-
-import Data.Functor.Contravariant
-
-import System.Process (CreateProcess(..))
-import qualified System.Process as System
 import System.Process.Lens.CommandSpec
 import System.Process.Lens.CreateProcess
-import System.Process.Lens.Internal
 import System.Process.Lens.StdStream
-
-
-createProcess :: CreateProcess -> IO ProcessHandler
-createProcess = createProcess_ "createProcess"
-
-createProcess_ :: String -> CreateProcess -> IO ProcessHandler
-createProcess_ s cp = view (from _Handler) <$> System.createProcess_ s cp
-
-shell :: String -> CreateProcess
-shell s = defaultCreateProcess & cmdspec_ .~ shellOf s
-
-proc :: FilePath -> [String] -> CreateProcess
-proc fp s = defaultCreateProcess & cmdspec_ .~ rawOf fp s
