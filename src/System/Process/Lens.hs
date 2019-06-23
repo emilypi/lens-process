@@ -53,6 +53,27 @@ module System.Process.Lens
 , usehandleOf
 ) where
 
+
+import Control.Lens
+
+import Data.Functor.Contravariant
+
+import System.Process (CreateProcess(..))
+import qualified System.Process as System
 import System.Process.Lens.CommandSpec
 import System.Process.Lens.CreateProcess
+import System.Process.Lens.Internal
 import System.Process.Lens.StdStream
+
+
+createProcess :: CreateProcess -> IO ProcessHandler
+createProcess = createProcess_ "createProcess"
+
+createProcess_ :: String -> CreateProcess -> IO ProcessHandler
+createProcess_ s cp = view (from _Handler) <$> System.createProcess_ s cp
+
+shell :: String -> CreateProcess
+shell s = defaultCreateProcess & cmdspec_ .~ shellOf s
+
+proc :: FilePath -> [String] -> CreateProcess
+proc fp s = defaultCreateProcess & cmdspec_ .~ rawOf fp s

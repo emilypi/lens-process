@@ -46,13 +46,14 @@ library
                      , Safe
 
 
-  build-depends:       base       >= 4.0     && < 5
-                     , exitcode   >= 0.1.0.2 && < 0.1.1
-                     , filepath   >= 1.0     && < 1.5
-                     , lens       >= 4.0     && < 4.18
-                     , mtl        >= 2.2     && < 2.3
-                     , process    >= 1.5     && < 1.7
-                     , stm        >= 2.5     && < 2.6
+  build-depends:       base          >= 4.0     && < 5
+                     , contravariant
+                     , exitcode      >= 0.1.0.2 && < 0.1.1
+                     , filepath      >= 1.0     && < 1.5
+                     , lens          >= 4.0     && < 4.18
+                     , mtl           >= 2.2     && < 2.3
+                     , process       >= 1.5     && < 1.7
+                     , stm           >= 2.5     && < 2.6
 
   hs-source-dirs:      src
   ghc-options:         -Wall

@@ -44,11 +44,6 @@ _RawCommand = prism' (uncurry RawCommand) $ \c -> case c of
   RawCommand fp s -> Just (fp, s)
   _ -> Nothing
 
--- | 'Traversal'' into the arguments of a command
---
-arguments :: Traversal' CmdSpec [String]
-arguments = _RawCommand . traverse
-
 -- | Classy prism into the shell command of a 'CmdSpec'
 --
 class IsShell a where
@@ -67,12 +62,17 @@ class IsRaw a where
 instance IsRaw CmdSpec where
   _Raw = _RawCommand
 
+-- | 'Traversal'' into the arguments of a command
+--
+arguments :: IsRaw a => Traversal' a [String]
+arguments = _Raw . traverse
+
 -- ---------------------------------------------------------- --
 -- Combinators
 
 -- | Append an argument to the argument list of a 'RawCommand'
 --
-arguing :: String -> CmdSpec -> CmdSpec
+arguing :: IsRaw a => String -> a -> a
 arguing s = arguments <>~ [s]
 
 -- | Lift a 'String' into a type via 'ShellCommand' with a prism into the
