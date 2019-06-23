@@ -8,7 +8,7 @@
 
 This package is intended to be on the lighter side, with few dependencies aside from `lens`. For full disclosure, this is the minimal dependency graph of `lens-process`:
 
-![lens-process dependencies](dependencies.png)
+![lens-process dependencies](dependencies.jpg)
 
 ### Motivation
 
