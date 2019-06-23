@@ -3,7 +3,6 @@
 [![Hackage](https://img.shields.io/hackage/v/microlens-process.svg)](https://hackage.haskell.org/package/microlens-process)
 [![Build Status](https://travis-ci.org/emilypi/lens-process.svg?branch=master)](https://travis-ci.org/emilypi/lens-process)
 
-### This package is still in Beta!
 
 This package is intended to be on the lighter side, with few dependencies aside from `microlens`.
 
