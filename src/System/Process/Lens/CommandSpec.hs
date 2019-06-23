@@ -1,4 +1,3 @@
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TypeFamilies #-}
 -- |
 -- Module       : System.Process.Lens.CommandSpec
@@ -34,14 +33,14 @@ import System.Process
 -- | A prism into the 'ShellCommand' case of a 'CmdSpec'
 --
 _ShellCommand :: Prism' CmdSpec String
-_ShellCommand = prism' ShellCommand $ \case
+_ShellCommand = prism' ShellCommand $ \c -> case c of
   ShellCommand s -> Just s
   _ -> Nothing
 
 -- | A prism into the 'RawCommand' case of a 'CmdSpec'
 --
 _RawCommand :: Prism' CmdSpec (FilePath, [String])
-_RawCommand = prism' (uncurry RawCommand) $ \case
+_RawCommand = prism' (uncurry RawCommand) $ \c -> case c of
   RawCommand fp s -> Just (fp, s)
   _ -> Nothing
 

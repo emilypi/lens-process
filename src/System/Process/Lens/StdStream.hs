@@ -1,4 +1,3 @@
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE Rank2Types #-}
 -- |
@@ -39,28 +38,28 @@ import System.Process
 -- | A prism into the 'Inherit' structure of a 'StdStream'
 --
 _Inherit :: Prism' StdStream StdStream
-_Inherit = prism' (const Inherit) $ \case
+_Inherit = prism' (const Inherit) $ \s -> case s of
   Inherit -> Just Inherit
   _ -> Nothing
 
 -- | A prism into the 'UseHandle' structure's Handle for a 'StdStream'
 --
 _UseHandle :: Prism' StdStream Handle
-_UseHandle = prism' UseHandle $ \case
+_UseHandle = prism' UseHandle $ \s -> case s of
   UseHandle t -> Just t
   _ -> Nothing
 
 -- | A prism into the 'CreatePipe' structure of a 'StdStream'
 --
 _CreatePipe :: Prism' StdStream StdStream
-_CreatePipe = prism' (const CreatePipe) $ \case
+_CreatePipe = prism' (const CreatePipe) $ \s -> case s of
   CreatePipe -> Just CreatePipe
   _ -> Nothing
 
 -- | A prism into the 'NoStream' structure of a 'StdStream'
 --
 _NoStream :: Prism' StdStream StdStream
-_NoStream = prism' (const NoStream) $ \case
+_NoStream = prism' (const NoStream) $ \s -> case s of
   NoStream -> Just NoStream
   _ -> Nothing
 
@@ -115,4 +114,3 @@ instance IsNoStream StdStream where
 --
 usehandleOf :: IsUseHandle a => Handle -> a
 usehandleOf h = _UsesHandle # h
-

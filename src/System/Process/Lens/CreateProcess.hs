@@ -1,4 +1,3 @@
-{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE Rank2Types #-}
 -- |
 -- Module       : Sysetem.Process.Lens.CreateProcess
@@ -33,9 +32,6 @@ module System.Process.Lens.CreateProcess
 , HasStdout(..)
 , HasStderr(..)
   -- * Combinators
-, stdoutOf
-, stdinOf
-, stderrOf
 , closing
 , inheriting
 , piping
@@ -168,21 +164,6 @@ instance HasStderr CreateProcess where
 
 -- ---------------------------------------------------------- --
 -- Combinators
-
--- | Retrieve the stdout handle associated with a 'CreateProcess'
---
-stdinOf :: CreateProcess -> Maybe H.Handle
-stdinOf = preview $ stdin . _UsesHandle
-
--- | Retrieve the stdin handle associated with a 'CreateProcess'
---
-stdoutOf :: CreateProcess -> Maybe H.Handle
-stdoutOf = preview $ stdout . _UsesHandle
-
--- | Retrieve the stderr handle associated with a 'CreateProcess'
---
-stderrOf :: CreateProcess -> Maybe H.Handle
-stderrOf = preview $ stderr . _UsesHandle
 
 -- | Close something with a prism into a non-standard 'H.Handle' in a 'CreateProcess'
 --
