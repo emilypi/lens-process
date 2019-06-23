@@ -1,5 +1,10 @@
 # Revision history for microlens-process
 
+## 0.1.0.2
+
+GHC versions < 710 fail because applicative is not in base. Explicit import
+added where needed
+
 ## 0.1.0.1
 
 Fix the cabal version
