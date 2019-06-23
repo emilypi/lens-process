@@ -27,6 +27,9 @@ module System.Process.Microlens.CommandSpec
 , arguing
 ) where
 
+
+import Control.Applicative
+
 import Lens.Micro
 import System.Process
 
@@ -46,7 +49,7 @@ import System.Process
 --
 arguments :: Traversal' CmdSpec [String]
 arguments f c = case c of
-  RawCommand fp args -> RawCommand fp <$> f args
+  RawCommand fp args -> fmap (RawCommand fp) $ f args
   t -> pure t
 -- | Append an argument to the argument list of a 'RawCommand'
 --
