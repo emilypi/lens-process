@@ -32,8 +32,6 @@ module System.Process.Microlens.CreateProcess
 , HasStdin(..)
 , HasStdout(..)
 , HasStderr(..)
-  -- * Combinators
-, closing
 ) where
 
 
@@ -157,19 +155,3 @@ instance HasStderr StdStream where
 
 instance HasStderr CreateProcess where
   _Stderr = stderr
-
--- ---------------------------------------------------------- --
--- Combinators
-
--- | Close something with a prism into a non-standard 'H.Handle' in a 'CreateProcess'
---
-closing :: Lens' CreateProcess StdStream -> CreateProcess -> IO ()
-closing l c = case c ^. l of
-  UseHandle h -> go h
-  _ -> return ()
-  where
-    go h
-      | h /= H.stdin
-      , h /= H.stdout
-      , h /= H.stderr = H.hClose h
-      | otherwise = return ()
