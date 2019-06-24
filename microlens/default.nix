@@ -4,13 +4,16 @@ let
 
   inherit (nixpkgs) pkgs;
 
-  f = { mkDerivation, base, filepath, microlens, process, stdenv }:
+  f = { mkDerivation, base, Cabal, cabal-doctest, doctest, filepath
+      , microlens, process, stdenv
+      }:
       mkDerivation {
         pname = "microlens-process";
-        version = "0.0.1.0";
+        version = "0.1.0.2";
         src = ./.;
+        setupHaskellDepends = [ base Cabal cabal-doctest ];
         libraryHaskellDepends = [ base filepath microlens process ];
-        doHaddock = false;
+        testHaskellDepends = [ base doctest microlens process ];
         homepage = "https://github.com/emilypi/lens-process";
         description = "Micro-optics for the process library";
         license = stdenv.lib.licenses.bsd3;
