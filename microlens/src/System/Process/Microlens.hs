@@ -2,6 +2,7 @@
 -- |
 -- Copyright 	: 2019 Emily Pillmore
 -- License	: BSD
+{-# LANGUAGE CPP #-}
 --
 -- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>
 -- Stability	: Experimental
@@ -26,11 +27,18 @@ module System.Process.Microlens
 , closefds
 , creategroup
 , delegatectlc
+#if MIN_VERSION_process(1, 3, 0)
 , detachconsole
+, createnewconsole
 , newsession
+#endif
+#if MIN_VERSION_process(1, 4, 0)
 , childgroup
 , childuser
+#endif
+#if MIN_VERSION_process(1, 5, 0)
 , useprocessjobs
+#endif
   -- * Traversals
 , arguments
   -- * Classy Lenses

@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Rank2Types #-}
 -- |
 -- Copyright 	: 2019 Emily Pillmore
@@ -38,11 +39,18 @@ module System.Process.Lens
 , closefds
 , creategroup
 , delegatectlc
+#if MIN_VERSION_process(1, 3, 0)
 , detachconsole
+, createnewconsole
 , newsession
+#endif
+#if MIN_VERSION_process(1, 4, 0)
 , childgroup
 , childuser
+#endif
+#if MIN_VERSION_process(1, 5, 0)
 , useprocessjobs
+#endif
 , hstdin
 , hstdout
 , hstderr

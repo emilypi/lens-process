@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Rank2Types #-}
 -- |
 -- Module       : Sysetem.Process.Lens.CreateProcess
@@ -15,7 +16,7 @@
 -- name convention, some record accessors don't have an apparently
 -- "good" name for their corresponding lens. Those that do not are
 -- post-fixed with `_` i order to denote their lens status. Thankfully,
--- there are only 6 that meet the criteria: 'cmdspec_', 'env_', 'cwd_', 
+-- there are only 6 that meet the criteria: 'cmdspec_', 'env_', 'cwd_',
 -- 'stdin_', 'stdout_', and 'stderr_'.
 --
 -- We provide classy variants of what we consider the significant portions
@@ -32,13 +33,19 @@ module System.Process.Lens.CreateProcess
 , stderr_
 , closefds
 , creategroup
-, createnewconsole
 , delegatectlc
-, detachconsole
 , newsession
+#if MIN_VERSION_process(1, 3, 0)
+, detachconsole
+, createnewconsole
+#endif
+#if MIN_VERSION_process(1, 4, 0)
 , childgroup
 , childuser
+#endif
+#if MIN_VERSION_process(1, 5, 0)
 , useprocessjobs
+#endif
   -- * Classy Lenses
 , HasStdin(..)
 , HasStdout(..)
@@ -101,6 +108,12 @@ creategroup = lens create_group (\t b -> t { create_group = b })
 delegatectlc :: Lens' CreateProcess Bool
 delegatectlc = lens delegate_ctlc (\t b -> t { delegate_ctlc = b })
 
+-- | Lens into the 'new_session' entry of the 'CreateProcess' record
+--
+newsession :: Lens' CreateProcess Bool
+newsession = lens new_session (\t b -> t { new_session = b })
+
+#if MIN_VERSION_process(1, 3, 0)
 -- | Lens into the 'detach_console' entry of the 'CreateProcess' record
 --
 detachconsole :: Lens' CreateProcess Bool
@@ -110,12 +123,9 @@ detachconsole = lens detach_console (\t b -> t { detach_console = b })
 --
 createnewconsole :: Lens' CreateProcess Bool
 createnewconsole = lens create_new_console (\t b -> t { create_new_console = b })
+#endif
 
--- | Lens into the 'new_session' entry of the 'CreateProcess' record
---
-newsession :: Lens' CreateProcess Bool
-newsession = lens new_session (\t b -> t { new_session = b })
-
+#if MIN_VERSION_process(1, 4, 0) && !WINDOWS
 -- | Lens into the 'child_group' entry of the 'CreateProcess' record
 --
 childgroup :: Lens' CreateProcess (Maybe CGid)
@@ -125,11 +135,14 @@ childgroup = lens child_group (\t b -> t { child_group = b })
 --
 childuser :: Lens' CreateProcess (Maybe CUid)
 childuser = lens child_user (\t b -> t { child_user = b })
+#endif
 
+#if MIN_VERSION_process(1, 5, 0)
 -- | Lens into the 'use_process_jobs' entry of the 'CreateProcess' record
 --
 useprocessjobs :: Lens' CreateProcess Bool
 useprocessjobs = lens use_process_jobs (\t b -> t { use_process_jobs = b })
+#endif
 
 -- ---------------------------------------------------------- --
 -- Classes
