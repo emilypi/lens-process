@@ -15,9 +15,8 @@
 -- Because 'CreateProcess' was created before the `_` prefix record
 -- name convention, some record accessors don't have an apparently
 -- "good" name for their corresponding lens. Those that do not are
--- post-fixed with `_` i order to denote their lens status. Thankfully,
--- there are only 6 that meet the criteria: 'cmdspec_', 'env_', 'cwd_',
--- 'stdin_', 'stdout_', and 'stderr_'.
+-- post-fixed with `_`. Thankfully, there are only 6 that meet the
+-- criteria: 'cmdspec_', 'env_', 'cwd_', 'stdin_', 'stdout_', and 'stderr_'.
 --
 -- We provide classy variants of what we consider the significant portions
 -- of 'CreateProcess' - namely, the `std_in`, `std_out`, and `std_err` entries.
