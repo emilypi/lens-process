@@ -165,7 +165,7 @@ usehandleOf h = _UsesHandle # h
 -- >>> inheriting ($) CreatePipe
 -- Inherit
 --
-inheriting :: IsInherit a => Lens' a StdStream -> a -> a
+inheriting :: Lens' a StdStream -> a -> a
 inheriting l = set l Inherit
 
 -- | Given a lens into a 'StdStream', overwrite to 'CreatePipe'.
@@ -175,7 +175,7 @@ inheriting l = set l Inherit
 -- >>> piping ($) NoStream
 -- CreatePipe
 --
-piping :: IsCreatePipe a => Lens' a StdStream -> a -> a
+piping :: Lens' a StdStream -> a -> a
 piping l = set l CreatePipe
 
 -- | Given a lens into a 'StdStream' and a handle, set the handle using
@@ -194,8 +194,8 @@ piping l = set l CreatePipe
 -- >>> handling ($) System.stdin Inherit
 -- Inherit
 --
-handling :: IsUseHandle a => Lens' a StdStream -> Handle -> a -> a
-handling l = set $ l . _UseHandle
+handling :: IsUseHandle b => Lens' a b -> Handle -> a -> a
+handling l = set $ l . _UsesHandle
 
 -- | Given a lens into a 'StdStream', set to 'NoStream'
 --
@@ -204,5 +204,5 @@ handling l = set $ l . _UseHandle
 -- >>> nostreaming ($) Inherit
 -- NoStream
 --
-nostreaming :: IsNoStream a => Lens' a StdStream -> a -> a
+nostreaming :: Lens' a StdStream -> a -> a
 nostreaming l = set l NoStream
