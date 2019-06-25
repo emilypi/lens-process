@@ -39,10 +39,10 @@ module System.Process.Lens
 , closefds
 , creategroup
 , delegatectlc
+, newsession
 #if MIN_VERSION_process(1, 3, 0)
 , detachconsole
 , createnewconsole
-, newsession
 #endif
 #if MIN_VERSION_process(1, 4, 0)
 , childgroup
