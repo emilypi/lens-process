@@ -14,7 +14,6 @@ import Control.Lens
 
 import System.Process
 import System.Process.Lens
-import System.Process.Lens.ProcessHandler
 
 import Test.Tasty
 import Test.Tasty.HUnit

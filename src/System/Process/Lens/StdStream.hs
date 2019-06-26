@@ -194,8 +194,8 @@ piping l = set l CreatePipe
 -- >>> handling ($) System.stdin Inherit
 -- Inherit
 --
-handling :: IsUseHandle b => Lens' a b -> Handle -> a -> a
-handling l = set $ l . _UsesHandle
+handling :: Lens' a StdStream -> Handle -> a -> a
+handling l = set $ l . _UseHandle
 
 -- | Given a lens into a 'StdStream', set to 'NoStream'
 --

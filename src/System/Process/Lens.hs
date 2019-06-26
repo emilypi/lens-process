@@ -17,63 +17,10 @@
 -- in the #haskell-lens channel.
 --
 module System.Process.Lens
-( -- * Data
-  ProcessHandler(..)
-, -- * Prisms
-  _ShellCommand
-, _RawCommand
-, arguments
-, _Inherit
-, _UseHandle
-, _CreatePipe
-, _NoStream
-  -- * Isos
-, _Handler
-  -- * Lenses
-, cmdspec_
-, cwd_
-, env_
-, stdin_
-, stdout_
-, stderr_
-, closefds
-, creategroup
-, delegatectlc
-, newsession
-#if MIN_VERSION_process(1, 3, 0)
-, detachconsole
-, createnewconsole
-#endif
-#if MIN_VERSION_process(1, 4, 0)
-, childgroup
-, childuser
-#endif
-#if MIN_VERSION_process(1, 5, 0)
-, useprocessjobs
-#endif
-, hstdin
-, hstdout
-, hstderr
-, hhandle
-  -- * Classes
-, IsRaw(..)
-, IsShell(..)
-, IsInherit(..)
-, IsUseHandle(..)
-, IsCreatePipe(..)
-, IsNoStream(..)
-, HasStdin(..)
-, HasStdout(..)
-, HasStderr(..)
-  -- * Combinators
-, inheriting
-, piping
-, handling
-, nostreaming
-, arguing
-, rawOf
-, shellOf
-, usehandleOf
+( module System.Process.Lens.CommandSpec
+, module System.Process.Lens.CreateProcess
+, module System.Process.Lens.ProcessHandler
+, module System.Process.Lens.StdStream
 ) where
 
 

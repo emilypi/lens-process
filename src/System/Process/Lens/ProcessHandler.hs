@@ -48,7 +48,6 @@ data ProcessHandler =
     , _hhandle :: ProcessHandle
     }
 
-
 -- | A lens into the stdin handle if requested
 --
 hstdin :: Lens' ProcessHandler (Maybe Handle)
@@ -90,12 +89,11 @@ defaultCreateProcess =
     , std_err = Inherit
     , close_fds = False
     , create_group = False
-
     , delegate_ctlc = False
+    , new_session = False
 #if MIN_VERSION_process(1, 3, 0)
     , detach_console = False
     , create_new_console = False
-    , new_session = False
 #endif
 #if MIN_VERSION_process(1, 4, 0)
     , child_group = Nothing
