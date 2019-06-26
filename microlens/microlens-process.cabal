@@ -4,7 +4,7 @@ cabal-version:       1.18
 -- http://haskell.org/cabal/users-guide/
 
 name:                microlens-process
-version:             0.1.0.3
+version:             0.2.0.0
 synopsis:            Micro-optics for the process library
 description:
    'microlens-process' is a set of multi-purpose optics and convenience
@@ -39,6 +39,7 @@ library
   exposed-modules:     System.Process.Microlens
                      , System.Process.Microlens.CreateProcess
                      , System.Process.Microlens.CommandSpec
+                     , System.Process.Microlens.StdStream
 
   build-depends:       base       >= 4.0      && < 5
                      , filepath   >= 1.0      && < 1.5

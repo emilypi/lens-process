@@ -2,7 +2,6 @@
 -- |
 -- Copyright 	: 2019 Emily Pillmore
 -- License	: BSD
-{-# LANGUAGE CPP #-}
 --
 -- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>
 -- Stability	: Experimental
@@ -17,37 +16,11 @@
 -- in the #haskell-lens channel.
 --
 module System.Process.Microlens
-( -- * Lenses
-  cmdspec_
-, cwd_
-, env_
-, stdin_
-, stdout_
-, stderr_
-, closefds
-, creategroup
-, delegatectlc
-#if MIN_VERSION_process(1, 3, 0)
-, detachconsole
-, createnewconsole
-, newsession
-#endif
-#if MIN_VERSION_process(1, 4, 0)
-, childgroup
-, childuser
-#endif
-#if MIN_VERSION_process(1, 5, 0)
-, useprocessjobs
-#endif
-  -- * Traversals
-, arguments
-  -- * Classy Lenses
-, HasStdin(..)
-, HasStdout(..)
-, HasStderr(..)
-  -- * Combinators
-, arguing
+( module System.Process.Microlens.CommandSpec
+, module System.Process.Microlens.CreateProcess
+, module System.Process.Microlens.StdStream
 ) where
 
 import System.Process.Microlens.CommandSpec
 import System.Process.Microlens.CreateProcess
+import System.Process.Microlens.StdStream

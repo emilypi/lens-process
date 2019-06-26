@@ -14,26 +14,14 @@
 -- cases, for which we provide prisms and classy variants, as well as
 -- a single 'Review' for the only non-trivial 'Review' - 'UseHandle'.
 --
-module System.Process.Lens.StdStream
-( -- * Prisms
-  _Inherit
-, _UseHandle
-, _CreatePipe
-, _NoStream
-  -- * Classy Prisms
-, IsInherit(..)
-, IsUseHandle(..)
-, IsCreatePipe(..)
-, IsNoStream(..)
-  -- * Combinators
-, usehandleOf
-, inheriting
+module System.Process.Microlens.StdStream
+( inheriting
 , piping
 , handling
 , nostreaming
 ) where
 
-import Control.Lens
+import Lens.Micro
 
 import System.IO (Handle)
 import System.Process
@@ -80,14 +68,11 @@ piping l = set l CreatePipe
 -- >>> handling ($) System.stdin $ UseHandle System.stdout
 -- UseHandle {handle: <stdin>}
 --
--- >>> handling ($) System.stdin NoStream
--- NoStream
+-- >>> handling ($) System.stdout Inherit
+-- UseHandle {handle: <stdout>}
 --
--- >>> handling ($) System.stdin Inherit
--- Inherit
---
-handling :: IsUseHandle b => Lens' a b -> Handle -> a -> a
-handling l = set $ l . _UsesHandle
+handling :: Lens' a StdStream -> Handle -> a -> a
+handling l h = set l (UseHandle h)
 
 -- | Given a lens into a 'StdStream', set to 'NoStream'
 --
