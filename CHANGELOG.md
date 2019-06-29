@@ -1,5 +1,13 @@
 # Revision history for lens-process
 
+## 0.3.0.0
+
+Final design - this will not change unless `System.Process` significantly changes.
+
+- `System.Process.Lens.CommandSpec` is renamed to `System.Process.Lens.CmdSpec` to be more flush with the data names
+- documentation improvements all around
+- Type signatures of combinators `inheriting`, `piping`, `handling` and `nostreaming` have had their unnecessary constraints dropped
+- `microlens-process` is now in lockstep featurewise
 
 ## 0.2.0.0
 
