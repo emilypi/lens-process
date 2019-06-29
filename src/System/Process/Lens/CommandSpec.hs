@@ -151,7 +151,7 @@ arguing s = arguments <>~ [s]
 -- ShellCommand "ls"
 --
 shellOf :: IsShell a => String -> a
-shellOf s = _Shell # s
+shellOf = review _Shell
 
 -- | Lift a 'FilePath' and list of arguments into a type via 'RawCommand'
 -- with a prism into the command
@@ -162,4 +162,4 @@ shellOf s = _Shell # s
 -- RawCommand "/bin/ls" ["-l"]
 --
 rawOf :: IsRaw a => FilePath -> [String] -> a
-rawOf fp ss = _Raw # (fp,ss)
+rawOf fp ss = _Raw # (fp, ss)

@@ -11,8 +11,7 @@
 --
 -- This module provides the associated optics and combinators
 -- for working with 'StdStream' objects. 'StdStream' consists of four
--- cases, for which we provide prisms and classy variants, as well as
--- a single 'Review' for the only non-trivial 'Review' - 'UseHandle'.
+-- cases, for which we provide prisms and classy variants.
 --
 module System.Process.Lens.StdStream
 ( -- * Prisms
@@ -49,7 +48,7 @@ import System.Process
 -- ---------------------------------------------------------- --
 -- Optics
 
--- | A prism into the 'Inherit' structure of a 'StdStream'
+-- | A 'Prism'' into the 'Inherit' structure of a 'StdStream'
 --
 -- Examples:
 --
@@ -61,7 +60,7 @@ _Inherit = prism' (const Inherit) $ \s -> case s of
   Inherit -> Just Inherit
   _ -> Nothing
 
--- | A prism into the 'UseHandle' structure's Handle for a 'StdStream'
+-- | A 'Prism'' into the 'UseHandle' structure's Handle for a 'StdStream'
 --
 -- Examples:
 --
@@ -74,7 +73,7 @@ _UseHandle = prism' UseHandle $ \s -> case s of
   UseHandle t -> Just t
   _ -> Nothing
 
--- | A prism into the 'CreatePipe' structure of a 'StdStream'
+-- | A 'Prism'' into the 'CreatePipe' structure of a 'StdStream'
 --
 -- Examples:
 --
@@ -155,7 +154,7 @@ instance IsNoStream StdStream where
 -- UseHandle {handle: <stdin>}
 --
 usehandleOf :: IsUseHandle a => Handle -> a
-usehandleOf h = _UsesHandle # h
+usehandleOf = review _UsesHandle
 
 -- | Given a lens into a 'StdStream', overwrite to 'Inherit' so that
 -- the stream inherits from its parent process
@@ -195,7 +194,7 @@ piping l = set l CreatePipe
 -- Inherit
 --
 handling :: Lens' a StdStream -> Handle -> a -> a
-handling l = set $ l . _UseHandle
+handling l = set (l . _UseHandle)
 
 -- | Given a lens into a 'StdStream', set to 'NoStream'
 --

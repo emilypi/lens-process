@@ -1,7 +1,7 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE Rank2Types #-}
 -- |
--- Module       : Sysetem.Process.Lens.CreateProcess
+-- Module       : System.Process.Microlens.CreateProcess
 -- Copyright 	: 2019 Emily Pillmore
 -- License	: BSD
 --

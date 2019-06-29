@@ -1,6 +1,6 @@
 {-# LANGUAGE CPP #-}
 -- |
--- Module       : Sysetem.Process.Lens.ProcessHandler
+-- Module       : System.Process.Microlens.ProcessHandler
 -- Copyright 	: 2019 Emily Pillmore
 -- License	: BSD
 --
@@ -11,11 +11,9 @@
 -- Convenient data type with associated optics + isos for working
 -- with the output of a 'createProcess' call.
 --
-module System.Process.Lens.ProcessHandler
+module System.Process.Microlens.ProcessHandler
 ( -- * Types
   ProcessHandler(..)
-  -- * Isos
-, _Handler
   -- * Lenses
 , hstdin
 , hstdout
@@ -26,7 +24,7 @@ module System.Process.Lens.ProcessHandler
 ) where
 
 
-import Control.Lens
+import Lens.Micro
 
 import System.IO
 import System.Process
@@ -68,14 +66,6 @@ hstderr = lens _hstderr (\t b -> t { _hstderr = b })
 --
 hhandle :: Lens' ProcessHandler ProcessHandle
 hhandle = lens _hhandle (\t b -> t { _hhandle = b })
-
--- | An iso between the ProcessHandler data and its product
--- representation
---
-_Handler :: Iso' ProcessHandler (Maybe Handle, Maybe Handle, Maybe Handle, ProcessHandle)
-_Handler = iso
-  (\(ProcessHandler a b c p) -> (a,b,c,p))
-  (\(a,b,c,p) -> ProcessHandler a b c p)
 
 -- | A default for a 'CreateProcess'
 --

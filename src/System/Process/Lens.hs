@@ -1,6 +1,7 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE Rank2Types #-}
 -- |
+-- Module       : System.Process.Lens
 -- Copyright 	: 2019 Emily Pillmore
 -- License	: BSD
 --

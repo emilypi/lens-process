@@ -1,5 +1,6 @@
 {-# LANGUAGE Rank2Types #-}
 -- |
+-- Module       : System.Process.Microlens
 -- Copyright 	: 2019 Emily Pillmore
 -- License	: BSD
 --
@@ -18,9 +19,11 @@
 module System.Process.Microlens
 ( module System.Process.Microlens.CommandSpec
 , module System.Process.Microlens.CreateProcess
+, module System.Process.Microlens.ProcessHandler
 , module System.Process.Microlens.StdStream
 ) where
 
 import System.Process.Microlens.CommandSpec
 import System.Process.Microlens.CreateProcess
+import System.Process.Microlens.ProcessHandler
 import System.Process.Microlens.StdStream

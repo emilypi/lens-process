@@ -57,7 +57,6 @@ import Control.Lens
 import System.Posix.Types
 import System.Process
 
-
 -- ---------------------------------------------------------- --
 -- Optics
 

@@ -1,6 +1,6 @@
 {-# LANGUAGE CPP #-}
 -- |
--- Module       : Sysetem.Process.Lens.Optics
+-- Module       : System.Process.Microlens.Optics
 -- Copyright 	: 2019 Emily Pillmore
 -- License	: BSD
 --
@@ -10,17 +10,14 @@
 --
 -- Just the (classy) optics
 --
-module System.Process.Lens.Optics
-(  -- * Prisms
+module System.Process.Microlens.Optics
+(  -- * Traversals
   _ShellCommand
 , _RawCommand
 , _Inherit
 , _UseHandle
 , _CreatePipe
 , _NoStream
-  -- * Isos
-, _Handler
-  -- * Traversals
 , arguments
   -- * Lenses
 , cmdspec_
@@ -61,7 +58,7 @@ module System.Process.Lens.Optics
 , HasStderr(..)
 ) where
 
-import System.Process.Lens.CommandSpec
-import System.Process.Lens.CreateProcess
-import System.Process.Lens.ProcessHandler
-import System.Process.Lens.StdStream
+import System.Process.Microlens.CommandSpec
+import System.Process.Microlens.CreateProcess
+import System.Process.Microlens.ProcessHandler
+import System.Process.Microlens.StdStream
