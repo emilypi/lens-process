@@ -9,7 +9,7 @@
 -- Portability	: TypeFamilies, RankNTypes
 --
 -- This module provides all of the optical exports, as well ask any associated
--- combinators. For just the optics, see 'System.Process.Lens.Optics', or
+-- combinators. For just the optics, see 'System.Process.Microlens.Optics', or
 -- if you are in need of something lighter weight, just for working with a
 -- 'CreateProcess' in terms of getters and setters, see <https://hackage.haskell.org/package/microlens>
 --
@@ -17,13 +17,13 @@
 -- in the #haskell-lens channel.
 --
 module System.Process.Microlens
-( module System.Process.Microlens.CommandSpec
+( module System.Process.Microlens.CmdSpec
 , module System.Process.Microlens.CreateProcess
 , module System.Process.Microlens.ProcessHandler
 , module System.Process.Microlens.StdStream
 ) where
 
-import System.Process.Microlens.CommandSpec
+import System.Process.Microlens.CmdSpec
 import System.Process.Microlens.CreateProcess
 import System.Process.Microlens.ProcessHandler
 import System.Process.Microlens.StdStream

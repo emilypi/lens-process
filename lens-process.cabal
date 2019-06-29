@@ -35,7 +35,7 @@ custom-setup
 
 library
   exposed-modules:     System.Process.Lens
-                     , System.Process.Lens.CommandSpec
+                     , System.Process.Lens.CmdSpec
                      , System.Process.Lens.CreateProcess
                      , System.Process.Lens.ProcessHandler
                      , System.Process.Lens.Optics

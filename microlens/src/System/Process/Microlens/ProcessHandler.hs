@@ -19,6 +19,7 @@ module System.Process.Microlens.ProcessHandler
 , hstdout
 , hstderr
 , hhandle
+, _Handler
   -- * Defaults
 , defaultCreateProcess
 ) where
@@ -31,20 +32,18 @@ import System.Process
 
 
 -- | A convenient handler for the output of a 'createProcess' call.
--- This data containes 4 components:
---
--- 1. a handle to stdin if it was requested
--- 2. a handle to stdout if it was requested
--- 3. a handle to stderr if it was requested
--- 4. a process handle, containing a pid lock, information regarding
---    ctcl-c delegation, and closed/open handle status info.
 --
 data ProcessHandler =
   ProcessHandler
     { _hstdin :: Maybe Handle
+      -- ^ a handle to stdin if it was requested
     , _hstdout :: Maybe Handle
+      -- ^ a handle to stdout if it was requested
     , _hstderr :: Maybe Handle
+      -- ^ a handle to stderr if it was requested
     , _hhandle :: ProcessHandle
+      -- ^ a process handle, containing a pid lock, information regarding
+      -- ctcl-c delegation, and closed/open handle status info.
     }
 
 -- | A lens into the stdin handle if requested
@@ -66,6 +65,14 @@ hstderr = lens _hstderr (\t b -> t { _hstderr = b })
 --
 hhandle :: Lens' ProcessHandler ProcessHandle
 hhandle = lens _hhandle (\t b -> t { _hhandle = b })
+
+-- | Because 'microlens' doesn't export Iso types, we must drop down to lenses
+-- and provide the isomorphism this way.
+--
+_Handler :: Lens' ProcessHandler (Maybe Handle, Maybe Handle, Maybe Handle, ProcessHandle)
+_Handler = lens
+  (\(ProcessHandler a b c d) -> (a,b,c,d))
+  (\_ (a,b,c,d) -> ProcessHandler a b c d)
 
 -- | A default for a 'CreateProcess'
 --

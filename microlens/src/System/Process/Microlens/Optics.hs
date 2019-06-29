@@ -20,6 +20,7 @@ module System.Process.Microlens.Optics
 , _NoStream
 , arguments
   -- * Lenses
+, _Handler
 , cmdspec_
 , cwd_
 , env_
@@ -58,7 +59,7 @@ module System.Process.Microlens.Optics
 , HasStderr(..)
 ) where
 
-import System.Process.Microlens.CommandSpec
+import System.Process.Microlens.CmdSpec
 import System.Process.Microlens.CreateProcess
 import System.Process.Microlens.ProcessHandler
 import System.Process.Microlens.StdStream

@@ -61,7 +61,7 @@ module System.Process.Lens.Optics
 , HasStderr(..)
 ) where
 
-import System.Process.Lens.CommandSpec
+import System.Process.Lens.CmdSpec
 import System.Process.Lens.CreateProcess
 import System.Process.Lens.ProcessHandler
 import System.Process.Lens.StdStream

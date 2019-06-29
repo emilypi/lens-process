@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE CPP #-}</span><span>
+</span><a name="line-2"></a><span class="hs-comment">-- |</span><span>
+</span><a name="line-3"></a><span class="hs-comment">-- Module       : System.Process.Microlens.Optics</span><span>
+</span><a name="line-4"></a><span class="hs-comment">-- Copyright 	: 2019 Emily Pillmore</span><span>
+</span><a name="line-5"></a><span class="hs-comment">-- License	: BSD</span><span>
+</span><a name="line-6"></a><span class="hs-comment">--</span><span>
+</span><a name="line-7"></a><span class="hs-comment">-- Maintainer	: Emily Pillmore &lt;emilypi@cohomolo.gy&gt;</span><span>
+</span><a name="line-8"></a><span class="hs-comment">-- Stability	: Experimental</span><span>
+</span><a name="line-9"></a><span class="hs-comment">-- Portability	: TypeFamilies, Rank2Types</span><span>
+</span><a name="line-10"></a><span class="hs-comment">--</span><span>
+</span><a name="line-11"></a><span class="hs-comment">-- Just the (classy) optics</span><span>
+</span><a name="line-12"></a><span class="hs-comment">--</span><span>
+</span><a name="line-13"></a><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">System.Process.Microlens.Optics</span><span>
+</span><a name="line-14"></a><span class="hs-special">(</span><span>  </span><span class="hs-comment">-- * Traversals</span><span>
+</span><a name="line-15"></a><span>  </span><a href="System.Process.Microlens.CommandSpec.html#_ShellCommand"><span class="hs-identifier hs-var">_ShellCommand</span></a><span>
+</span><a name="line-16"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CommandSpec.html#_RawCommand"><span class="hs-identifier hs-var">_RawCommand</span></a><span>
+</span><a name="line-17"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.StdStream.html#_Inherit"><span class="hs-identifier hs-var">_Inherit</span></a><span>
+</span><a name="line-18"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.StdStream.html#_UseHandle"><span class="hs-identifier hs-var">_UseHandle</span></a><span>
+</span><a name="line-19"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.StdStream.html#_CreatePipe"><span class="hs-identifier hs-var">_CreatePipe</span></a><span>
+</span><a name="line-20"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.StdStream.html#_NoStream"><span class="hs-identifier hs-var">_NoStream</span></a><span>
+</span><a name="line-21"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CommandSpec.html#arguments"><span class="hs-identifier hs-var">arguments</span></a><span>
+</span><a name="line-22"></a><span>  </span><span class="hs-comment">-- * Lenses</span><span>
+</span><a name="line-23"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#cmdspec_"><span class="hs-identifier hs-var">cmdspec_</span></a><span>
+</span><a name="line-24"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#cwd_"><span class="hs-identifier hs-var">cwd_</span></a><span>
+</span><a name="line-25"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#env_"><span class="hs-identifier hs-var">env_</span></a><span>
+</span><a name="line-26"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#stdin_"><span class="hs-identifier hs-var">stdin_</span></a><span>
+</span><a name="line-27"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#stdout_"><span class="hs-identifier hs-var">stdout_</span></a><span>
+</span><a name="line-28"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#stderr_"><span class="hs-identifier hs-var">stderr_</span></a><span>
+</span><a name="line-29"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#closefds"><span class="hs-identifier hs-var">closefds</span></a><span>
+</span><a name="line-30"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#creategroup"><span class="hs-identifier hs-var">creategroup</span></a><span>
+</span><a name="line-31"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#delegatectlc"><span class="hs-identifier hs-var">delegatectlc</span></a><span>
+</span><a name="line-32"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#newsession"><span class="hs-identifier hs-var">newsession</span></a><span>
+</span><a name="line-33"></a><span class="hs-cpp">#if MIN_VERSION_process(1, 3, 0)
+</span><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#detachconsole"><span class="hs-identifier hs-var">detachconsole</span></a><span>
+</span><a name="line-35"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#createnewconsole"><span class="hs-identifier hs-var">createnewconsole</span></a><span>
+</span><a name="line-36"></a><span class="hs-cpp">#endif
+#if MIN_VERSION_process(1, 4, 0)
+</span><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#childgroup"><span class="hs-identifier hs-var">childgroup</span></a><span>
+</span><a name="line-39"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#childuser"><span class="hs-identifier hs-var">childuser</span></a><span>
+</span><a name="line-40"></a><span class="hs-cpp">#endif
+#if MIN_VERSION_process(1, 5, 0)
+</span><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#useprocessjobs"><span class="hs-identifier hs-var">useprocessjobs</span></a><span>
+</span><a name="line-43"></a><span class="hs-cpp">#endif
+</span><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.ProcessHandler.html#hstdin"><span class="hs-identifier hs-var">hstdin</span></a><span>
+</span><a name="line-45"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.ProcessHandler.html#hstdout"><span class="hs-identifier hs-var">hstdout</span></a><span>
+</span><a name="line-46"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.ProcessHandler.html#hstderr"><span class="hs-identifier hs-var">hstderr</span></a><span>
+</span><a name="line-47"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.ProcessHandler.html#hhandle"><span class="hs-identifier hs-var">hhandle</span></a><span>
+</span><a name="line-48"></a><span>  </span><span class="hs-comment">-- * Classy Prisms</span><span>
+</span><a name="line-49"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CommandSpec.html#IsRaw"><span class="hs-identifier hs-type">IsRaw</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-50"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CommandSpec.html#IsShell"><span class="hs-identifier hs-type">IsShell</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-51"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.StdStream.html#IsInherit"><span class="hs-identifier hs-type">IsInherit</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-52"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.StdStream.html#IsUseHandle"><span class="hs-identifier hs-type">IsUseHandle</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-53"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.StdStream.html#IsCreatePipe"><span class="hs-identifier hs-type">IsCreatePipe</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-54"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.StdStream.html#IsNoStream"><span class="hs-identifier hs-type">IsNoStream</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-55"></a><span>  </span><span class="hs-comment">-- * Classy Lenses</span><span>
+</span><a name="line-56"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#HasStdin"><span class="hs-identifier hs-type">HasStdin</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-57"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#HasStdout"><span class="hs-identifier hs-type">HasStdout</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-58"></a><span class="hs-special">,</span><span> </span><a href="System.Process.Microlens.CreateProcess.html#HasStderr"><span class="hs-identifier hs-type">HasStderr</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-59"></a><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><a name="line-60"></a><span>
+</span><a name="line-61"></a><span class="hs-keyword">import</span><span> </span><a href="System.Process.Microlens.CommandSpec.html"><span class="hs-identifier">System.Process.Microlens.CommandSpec</span></a><span>
+</span><a name="line-62"></a><span class="hs-keyword">import</span><span> </span><a href="System.Process.Microlens.CreateProcess.html"><span class="hs-identifier">System.Process.Microlens.CreateProcess</span></a><span>
+</span><a name="line-63"></a><span class="hs-keyword">import</span><span> </span><a href="System.Process.Microlens.ProcessHandler.html"><span class="hs-identifier">System.Process.Microlens.ProcessHandler</span></a><span>
+</span><a name="line-64"></a><span class="hs-keyword">import</span><span> </span><a href="System.Process.Microlens.StdStream.html"><span class="hs-identifier">System.Process.Microlens.StdStream</span></a><span>
+</span><a name="line-65"></a></pre></body></html>

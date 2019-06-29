@@ -38,7 +38,7 @@ custom-setup
 library
   exposed-modules:     System.Process.Microlens
                      , System.Process.Microlens.CreateProcess
-                     , System.Process.Microlens.CommandSpec
+                     , System.Process.Microlens.CmdSpec
                      , System.Process.Microlens.Optics
                      , System.Process.Microlens.ProcessHandler
                      , System.Process.Microlens.StdStream

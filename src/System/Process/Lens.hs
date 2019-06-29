@@ -18,14 +18,14 @@
 -- in the #haskell-lens channel.
 --
 module System.Process.Lens
-( module System.Process.Lens.CommandSpec
+( module System.Process.Lens.CmdSpec
 , module System.Process.Lens.CreateProcess
 , module System.Process.Lens.ProcessHandler
 , module System.Process.Lens.StdStream
 ) where
 
 
-import System.Process.Lens.CommandSpec
+import System.Process.Lens.CmdSpec
 import System.Process.Lens.CreateProcess
 import System.Process.Lens.ProcessHandler
 import System.Process.Lens.StdStream
