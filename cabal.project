@@ -1,2 +1,5 @@
 packages: .
           microlens
+
+package lens-process
+    tests: True

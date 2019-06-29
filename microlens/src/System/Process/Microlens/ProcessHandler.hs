@@ -66,8 +66,7 @@ hstderr = lens _hstderr (\t b -> t { _hstderr = b })
 hhandle :: Lens' ProcessHandler ProcessHandle
 hhandle = lens _hhandle (\t b -> t { _hhandle = b })
 
--- | Because 'microlens' doesn't export Iso types, we must drop down to lenses
--- and provide the isomorphism this way.
+-- | An isomorphism between a 'ProcessHandler' and its tuple representation
 --
 _Handler :: Lens' ProcessHandler (Maybe Handle, Maybe Handle, Maybe Handle, ProcessHandle)
 _Handler = lens
