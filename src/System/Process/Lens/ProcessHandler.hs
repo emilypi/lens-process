@@ -35,18 +35,17 @@ import System.Process
 -- | A convenient handler for the output of a 'createProcess' call.
 -- This data containes 4 components:
 --
--- 1. a handle to stdin if it was requested
--- 2. a handle to stdout if it was requested
--- 3. a handle to stderr if it was requested
--- 4. a process handle, containing a pid lock, information regarding
---    ctcl-c delegation, and closed/open handle status info.
---
 data ProcessHandler =
   ProcessHandler
     { _hstdin :: Maybe Handle
+      -- ^ a handle to stdin if it was requested
     , _hstdout :: Maybe Handle
+      -- ^ a handle to stdout if it was requested
     , _hstderr :: Maybe Handle
+      -- ^ a handle to stderr if it was requested
     , _hhandle :: ProcessHandle
+      -- ^ a process handle, containing a pid lock, information regarding
+      -- ctcl-c delegation, and closed/open handle status info.
     }
 
 -- | A lens into the stdin handle if requested
