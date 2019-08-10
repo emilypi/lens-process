@@ -1,6 +1,6 @@
 {-# LANGUAGE TypeFamilies #-}
 -- |
--- Module       : System.Process.Lens.CmddSpec
+-- Module       : System.Process.Lens.CmdSpec
 -- Copyright 	: 2019 Emily Pillmore
 -- License	: BSD
 --
@@ -29,6 +29,7 @@ module System.Process.Lens.CmdSpec
   -- * Classy Prisms
 , IsShell(..)
 , IsRaw(..)
+
   -- * Combinators
 , arguing
 , shellOf
