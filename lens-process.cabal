@@ -1,6 +1,6 @@
 cabal-version:      1.18
 name:               lens-process
-version:            0.3.0.0
+version:            0.3.0.1
 synopsis:           Optics for system processes
 description:
   'lens-process' is a set of multi-purpose optics and convenience

@@ -4,7 +4,7 @@
 [![Hackage](https://img.shields.io/hackage/v/lens-process.svg)](https://hackage.haskell.org/package/lens-process)
 [![Build Status](https://travis-ci.org/emilypi/lens-process.svg?branch=master)](https://travis-ci.org/emilypi/lens-process)
 
-This package is intended to be on the lighter side, with few dependencies aside from `lens`. For full disclosure, this is the minimal dependency graph of `lens-process`:
+This package is intended to be minimalistic, with few dependencies aside from `lens`. For full disclosure, this is the minimal dependency graph of `lens-process`:
 
 ![lens-process dependencies](dependencies.jpg)
 
