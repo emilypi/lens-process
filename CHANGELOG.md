@@ -1,5 +1,9 @@
 # Revision history for lens-process
 
+## 0.3.0.1
+
+- Support for 8.8.1
+
 ## 0.3.0.0
 
 Final design - this will not change unless `System.Process` significantly changes.

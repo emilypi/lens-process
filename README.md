@@ -6,7 +6,7 @@
 
 This package is intended to be minimalistic, with few dependencies aside from `lens`. For full disclosure, this is the minimal dependency graph of `lens-process`:
 
-![lens-process dependencies](dependencies.jpg)
+![lens-process dependencies](https://i.imgur.com/ObGVm2f.jpg)
 
 ### Motivation
 
