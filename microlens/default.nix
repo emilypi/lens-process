@@ -9,7 +9,7 @@ let
       }:
       mkDerivation {
         pname = "microlens-process";
-        version = "0.1.0.3";
+        version = "0.2.0.1";
         src = ./.;
         setupHaskellDepends = [ base Cabal cabal-doctest ];
         libraryHaskellDepends = [ base filepath microlens process ];
