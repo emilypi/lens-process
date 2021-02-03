@@ -2,7 +2,7 @@
 # lens-process
 
 [![Hackage](https://img.shields.io/hackage/v/lens-process.svg)](https://hackage.haskell.org/package/lens-process)
-[![Build Status](https://travis-ci.org/emilypi/lens-process.svg?branch=master)](https://travis-ci.org/emilypi/lens-process)
+![Build Status](https://github.com/emilypi/lens-process/workflows/CI/badge.svg)
 
 This package is intended to be minimalistic, with few dependencies aside from `lens`. For full disclosure, this is the minimal dependency graph of `lens-process`:
 
