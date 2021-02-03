@@ -2,7 +2,7 @@
 {-# LANGUAGE Rank2Types #-}
 -- |
 -- Module       : System.Process.Lens
--- Copyright 	: 2019 Emily Pillmore
+-- Copyright 	: (c) 2019-2021 Emily Pillmore
 -- License	: BSD
 --
 -- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>

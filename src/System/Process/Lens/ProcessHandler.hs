@@ -21,8 +21,6 @@ module System.Process.Lens.ProcessHandler
 , hstdout
 , hstderr
 , hhandle
-  -- * Defaults
-, defaultCreateProcess
 ) where
 
 
@@ -75,31 +73,3 @@ _Handler :: Iso' ProcessHandler (Maybe Handle, Maybe Handle, Maybe Handle, Proce
 _Handler = iso
   (\(ProcessHandler a b c p) -> (a,b,c,p))
   (\(a,b,c,p) -> ProcessHandler a b c p)
-
--- | A default for a 'CreateProcess'
---
-defaultCreateProcess :: CreateProcess
-defaultCreateProcess =
-  CreateProcess
-    { cmdspec = ShellCommand ""
-    , cwd = Nothing
-    , env = Nothing
-    , std_in = Inherit
-    , std_out = Inherit
-    , std_err = Inherit
-    , close_fds = False
-    , create_group = False
-    , delegate_ctlc = False
-    , new_session = False
-#if MIN_VERSION_process(1, 3, 0)
-    , detach_console = False
-    , create_new_console = False
-#endif
-#if MIN_VERSION_process(1, 4, 0)
-    , child_group = Nothing
-    , child_user = Nothing
-#endif
-#if MIN_VERSION_process(1, 5, 0)
-    , use_process_jobs = False
-#endif
-    }
