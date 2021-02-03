@@ -1,5 +1,19 @@
 # Revision history for lens-process
 
+## 0.4.0.0
+
+**Administrative:**
+
+ - Migration to Gitlab CI
+ - Support for 8.10
+ - Migrate to using `cabal-doscpec` instead of docspec custom setup
+
+**API changes:**
+
+ - Enum prisms are now `Prism a ()` instead of `Prism a a` for `StdStream`.
+ - Prisms prefixed with `Is` are now prefixed with `As` in alignment with lens convention.
+ - `defaultCreateProcess` is now located in `Lens.Process.CreateProcess` instead of `Lens.Process.ProcessHandler`.
+
 ## 0.3.0.1
 
 - Support for 8.8.1

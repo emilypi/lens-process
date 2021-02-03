@@ -2,7 +2,7 @@
 {-# LANGUAGE Rank2Types #-}
 -- |
 -- Module       : Sysetem.Process.Lens.CreateProcess
--- Copyright 	: 2019 Emily Pillmore
+-- Copyright 	: (c) 2019-2021 Emily Pillmore
 -- License	: BSD
 --
 -- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>
@@ -49,6 +49,8 @@ module System.Process.Lens.CreateProcess
 , HasStdin(..)
 , HasStdout(..)
 , HasStderr(..)
+  -- * Defaults
+, defaultCreateProcess
 ) where
 
 
@@ -177,3 +179,31 @@ instance HasStderr StdStream where
 
 instance HasStderr CreateProcess where
   _Stderr = stderr_
+
+-- | A default for a 'CreateProcess'
+--
+defaultCreateProcess :: CreateProcess
+defaultCreateProcess =
+  CreateProcess
+    { cmdspec = ShellCommand ""
+    , cwd = Nothing
+    , env = Nothing
+    , std_in = Inherit
+    , std_out = Inherit
+    , std_err = Inherit
+    , close_fds = False
+    , create_group = False
+    , delegate_ctlc = False
+    , new_session = False
+#if MIN_VERSION_process(1, 3, 0)
+    , detach_console = False
+    , create_new_console = False
+#endif
+#if MIN_VERSION_process(1, 4, 0)
+    , child_group = Nothing
+    , child_user = Nothing
+#endif
+#if MIN_VERSION_process(1, 5, 0)
+    , use_process_jobs = False
+#endif
+    }

@@ -1,7 +1,7 @@
 {-# LANGUAGE CPP #-}
 -- |
 -- Module       : Sysetem.Process.Lens.Optics
--- Copyright 	: 2019 Emily Pillmore
+-- Copyright 	: (c) 2019-2021 Emily Pillmore
 -- License	: BSD
 --
 -- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>
@@ -49,12 +49,12 @@ module System.Process.Lens.Optics
 , hstderr
 , hhandle
   -- * Classy Prisms
-, IsRaw(..)
-, IsShell(..)
-, IsInherit(..)
-, IsUseHandle(..)
-, IsCreatePipe(..)
-, IsNoStream(..)
+, AsRaw(..)
+, AsShell(..)
+, AsInherit(..)
+, AsUseHandle(..)
+, AsCreatePipe(..)
+, AsNoStream(..)
   -- * Classy Lenses
 , HasStdin(..)
 , HasStdout(..)

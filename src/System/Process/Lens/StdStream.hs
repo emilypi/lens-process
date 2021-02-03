@@ -1,8 +1,12 @@
+{-# LANGUAGE AllowAmbiguousTypes #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE Rank2Types #-}
 -- |
 -- Module       : System.Process.Lens.StdStream
--- Copyright 	: 2019 Emily Pillmore
+-- Copyright 	: (c) 2019-2021 Emily Pillmore
 -- License	: BSD
 --
 -- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>
@@ -20,10 +24,10 @@ module System.Process.Lens.StdStream
 , _CreatePipe
 , _NoStream
   -- * Classy Prisms
-, IsInherit(..)
-, IsUseHandle(..)
-, IsCreatePipe(..)
-, IsNoStream(..)
+, AsInherit(..)
+, AsUseHandle(..)
+, AsCreatePipe(..)
+, AsNoStream(..)
   -- * Combinators
 , usehandleOf
 , inheriting
@@ -52,12 +56,12 @@ import System.Process
 --
 -- Examples:
 --
--- >>> _Inherit # CreatePipe
+-- >>> _Inherit # ()
 -- Inherit
 --
-_Inherit :: Prism' StdStream StdStream
-_Inherit = prism' (const Inherit) $ \s -> case s of
-  Inherit -> Just Inherit
+_Inherit :: Prism' StdStream ()
+_Inherit = prism' (const Inherit) $ \case
+  Inherit -> Just ()
   _ -> Nothing
 
 -- | A 'Prism'' into the 'UseHandle' structure's Handle for a 'StdStream'
@@ -69,7 +73,7 @@ _Inherit = prism' (const Inherit) $ \s -> case s of
 -- UseHandle {handle: <stdin>}
 --
 _UseHandle :: Prism' StdStream Handle
-_UseHandle = prism' UseHandle $ \s -> case s of
+_UseHandle = prism' UseHandle $ \case
   UseHandle t -> Just t
   _ -> Nothing
 
@@ -77,24 +81,24 @@ _UseHandle = prism' UseHandle $ \s -> case s of
 --
 -- Examples:
 --
--- >>> _CreatePipe # Inherit
+-- >>> _CreatePipe # ()
 -- CreatePipe
 --
-_CreatePipe :: Prism' StdStream StdStream
-_CreatePipe = prism' (const CreatePipe) $ \s -> case s of
-  CreatePipe -> Just CreatePipe
+_CreatePipe :: Prism' StdStream ()
+_CreatePipe = prism' (const CreatePipe) $ \case
+  CreatePipe -> Just ()
   _ -> Nothing
 
 -- | A prism into the 'NoStream' structure of a 'StdStream'
 --
 -- Examples:
 --
--- >>> _NoStream # CreatePipe
+-- >>> _NoStream # ()
 -- NoStream
 --
-_NoStream :: Prism' StdStream StdStream
-_NoStream = prism' (const NoStream) $ \s -> case s of
-  NoStream -> Just NoStream
+_NoStream :: Prism' StdStream ()
+_NoStream = prism' (const NoStream) $ \case
+  NoStream -> Just ()
   _ -> Nothing
 
 -- ---------------------------------------------------------- --
@@ -104,44 +108,48 @@ _NoStream = prism' (const NoStream) $ \s -> case s of
 -- structure. Any 'StdStream' will have a prism into `Inherit' -
 -- it is just an overwrite to 'Inherit'
 --
-class IsInherit a where
-  _Inherits :: Prism' a StdStream
+class AsInherit a where
+  _Inherits :: Prism' a ()
   {-# MINIMAL _Inherits #-}
 
-instance IsInherit StdStream where
+instance AsInherit StdStream where
   _Inherits = _Inherit
+  {-# inline _Inherits #-}
 
 -- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure.
 --
-class IsUseHandle a where
+class AsUseHandle a where
   _UsesHandle :: Prism' a Handle
   {-# MINIMAL _UsesHandle #-}
 
-instance IsUseHandle StdStream where
+instance AsUseHandle StdStream where
   _UsesHandle = _UseHandle
+  {-# inline _UsesHandle #-}
 
 -- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure. Any 'StdStream' will have a prism into
 -- 'CreatePipe' - it is just an overwrite to 'CreatePipe'
 --
-class IsCreatePipe a where
-  _CreatesPipe :: Prism' a StdStream
+class AsCreatePipe a where
+  _CreatesPipe :: Prism' a ()
   {-# MINIMAL _CreatesPipe #-}
 
-instance IsCreatePipe StdStream where
+instance AsCreatePipe StdStream where
   _CreatesPipe = _CreatePipe
+  {-# inline _CreatesPipe #-}
 
 -- | Class constraint proving a type has a prism into a 'Handle' via
 -- a 'UseHandle' structure. Any 'StdStream' will have a prism into
 -- 'NoStream' - it is just an overwrite to 'NoStream'.
 --
-class IsNoStream a where
-  _NoStreams :: Prism' a StdStream
+class AsNoStream a where
+  _NoStreams :: Prism' a ()
   {-# MINIMAL _NoStreams #-}
 
-instance IsNoStream StdStream where
+instance AsNoStream StdStream where
   _NoStreams = _NoStream
+  {-# inline _NoStreams #-}
 
 -- ---------------------------------------------------------- --
 -- Combinators
@@ -153,29 +161,32 @@ instance IsNoStream StdStream where
 -- >>> usehandleOf @StdStream System.stdin
 -- UseHandle {handle: <stdin>}
 --
-usehandleOf :: IsUseHandle a => Handle -> a
+usehandleOf :: AsUseHandle a => Handle -> a
 usehandleOf = review _UsesHandle
+{-# inline usehandleOf #-}
 
 -- | Given a lens into a 'StdStream', overwrite to 'Inherit' so that
 -- the stream inherits from its parent process
 --
 -- Examples:
 --
--- >>> inheriting ($) CreatePipe
+-- >>> inheriting id CreatePipe
 -- Inherit
 --
 inheriting :: Lens' a StdStream -> a -> a
 inheriting l = set l Inherit
+{-# inline inheriting #-}
 
 -- | Given a lens into a 'StdStream', overwrite to 'CreatePipe'.
 --
 -- Examples:
 --
--- >>> piping ($) NoStream
+-- >>> piping id NoStream
 -- CreatePipe
 --
 piping :: Lens' a StdStream -> a -> a
 piping l = set l CreatePipe
+{-# inline piping #-}
 
 -- | Given a lens into a 'StdStream' and a handle, set the handle using
 -- 'UseHandle'. Note that this is the only really interesting case for anything
@@ -184,24 +195,26 @@ piping l = set l CreatePipe
 -- Examples:
 --
 --
--- >>> handling ($) System.stdin $ UseHandle System.stdout
+-- >>> handling id System.stdin $ UseHandle System.stdout
 -- UseHandle {handle: <stdin>}
 --
--- >>> handling ($) System.stdin NoStream
+-- >>> handling id System.stdin NoStream
 -- NoStream
 --
--- >>> handling ($) System.stdin Inherit
+-- >>> handling id System.stdin Inherit
 -- Inherit
 --
 handling :: Lens' a StdStream -> Handle -> a -> a
 handling l = set (l . _UseHandle)
+{-# inline handling #-}
 
 -- | Given a lens into a 'StdStream', set to 'NoStream'
 --
 -- Examples:
 --
--- >>> nostreaming ($) Inherit
+-- >>> nostreaming id Inherit
 -- NoStream
 --
 nostreaming :: Lens' a StdStream -> a -> a
 nostreaming l = set l NoStream
+{-# inline nostreaming #-}

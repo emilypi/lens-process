@@ -1,6 +1,6 @@
 -- |
 -- Module       : Main (tests)
--- Copyright 	: 2019 Emily Pillmore
+-- Copyright 	: (c) 2019-2021 Emily Pillmore
 -- License	: BSD
 --
 -- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>

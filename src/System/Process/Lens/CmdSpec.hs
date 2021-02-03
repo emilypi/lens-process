@@ -1,7 +1,8 @@
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TypeFamilies #-}
 -- |
 -- Module       : System.Process.Lens.CmdSpec
--- Copyright 	: 2019 Emily Pillmore
+-- Copyright 	: (c) 2019-2021 Emily Pillmore
 -- License	: BSD
 --
 -- Maintainer	: Emily Pillmore <emilypi@cohomolo.gy>
@@ -27,8 +28,8 @@ module System.Process.Lens.CmdSpec
 , _ShellCommand
 , _RawCommand
   -- * Classy Prisms
-, IsShell(..)
-, IsRaw(..)
+, AsShell(..)
+, AsRaw(..)
 
   -- * Combinators
 , arguing
@@ -63,7 +64,7 @@ import System.Process
 -- Nothing
 --
 _ShellCommand :: Prism' CmdSpec String
-_ShellCommand = prism' ShellCommand $ \c -> case c of
+_ShellCommand = prism' ShellCommand $ \case
   ShellCommand s -> Just s
   _ -> Nothing
 
@@ -84,7 +85,7 @@ _ShellCommand = prism' ShellCommand $ \c -> case c of
 -- ["-l"]
 --
 _RawCommand :: Prism' CmdSpec (FilePath, [String])
-_RawCommand = prism' (uncurry RawCommand) $ \c -> case c of
+_RawCommand = prism' (uncurry RawCommand) $ \case
   RawCommand fp s -> Just (fp, s)
   _ -> Nothing
 
@@ -92,30 +93,30 @@ _RawCommand = prism' (uncurry RawCommand) $ \c -> case c of
 --
 -- Examples:
 --
--- >>> f :: IsShell a => a -> Maybe String; f = preview _Shell
+-- >>> f :: AsShell a => a -> Maybe String; f = preview _Shell
 -- >>> f $ _ShellCommand # "ls -l"
 -- Just "ls -l"
 --
-class IsShell a where
+class AsShell a where
   _Shell :: Prism' a String
   {-# MINIMAL _Shell #-}
 
-instance IsShell CmdSpec where
+instance AsShell CmdSpec where
   _Shell = _ShellCommand
 
 -- | Classy prism into the raw command of a 'CmdSpec'
 --
 -- Examples:
 --
--- >>> f :: IsRaw a => a -> Maybe FilePath; f = preview (_Raw . _1)
+-- >>> f :: AsRaw a => a -> Maybe FilePath; f = preview (_Raw . _1)
 -- >>> f $ _RawCommand # ("/bin/ls", ["ls -l"])
 -- Just "/bin/ls"
 --
-class IsRaw a where
+class AsRaw a where
   _Raw :: Prism' a (FilePath, [String])
   {-# MINIMAL _Raw #-}
 
-instance IsRaw CmdSpec where
+instance AsRaw CmdSpec where
   _Raw = _RawCommand
 
 -- | 'Traversal'' into the arguments of a command
@@ -125,7 +126,7 @@ instance IsRaw CmdSpec where
 -- >>> RawCommand "/bin/ls" ["-l"] ^. arguments
 -- ["-l"]
 --
-arguments :: IsRaw a => Traversal' a [String]
+arguments :: AsRaw a => Traversal' a [String]
 arguments = _Raw . traverse
 
 -- ---------------------------------------------------------- --
@@ -141,7 +142,7 @@ arguments = _Raw . traverse
 -- >>> arguing "-h" (RawCommand "/bin/ls" ["-l"]) ^. arguments
 -- ["-l","-h"]
 --
-arguing :: IsRaw a => String -> a -> a
+arguing :: AsRaw a => String -> a -> a
 arguing s = arguments <>~ [s]
 
 -- | Lift a 'String' into a type via 'ShellCommand' with a prism into the
@@ -151,7 +152,7 @@ arguing s = arguments <>~ [s]
 -- >>> shellOf @CmdSpec "ls"
 -- ShellCommand "ls"
 --
-shellOf :: IsShell a => String -> a
+shellOf :: AsShell a => String -> a
 shellOf = review _Shell
 
 -- | Lift a 'FilePath' and list of arguments into a type via 'RawCommand'
@@ -162,5 +163,5 @@ shellOf = review _Shell
 -- >>> rawOf @CmdSpec "/bin/ls" ["-l"]
 -- RawCommand "/bin/ls" ["-l"]
 --
-rawOf :: IsRaw a => FilePath -> [String] -> a
+rawOf :: AsRaw a => FilePath -> [String] -> a
 rawOf fp ss = _Raw # (fp, ss)
